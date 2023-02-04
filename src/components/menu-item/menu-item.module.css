@@ -1,0 +1,14 @@
+.link {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+}
+.link:last-of-type {
+    margin-right: 0;
+}
+.link_primary {
+    color: #F2F2F3;
+}
+.link_secondary {
+    color: #8585AD;
+}

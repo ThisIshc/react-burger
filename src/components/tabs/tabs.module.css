@@ -1,0 +1,7 @@
+.tabs {
+    display: flex;
+    width: 100%;
+}
+.tabs__item {
+    width: 100%;
+}
