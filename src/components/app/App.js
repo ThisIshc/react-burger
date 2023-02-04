@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
-import AppHeader from "./components/app-header/app-header";
-import BurgerIngredients from "./components/burger-ingredients/burger-ingredients";
-import BurgerConstructor from "./components/burger-constructor/burger-constructor";
-import { data } from "./utils/data";
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { data } from "../../utils/data";
 
-console.log(data)
 function App() {
 	return (
 		<div className="App">
@@ -15,10 +14,10 @@ function App() {
 					<div className="container">
 						<div className="burger__wrapper">
 							<div className="burger__block">
-								<BurgerIngredients />
+								<BurgerIngredients ingredients={data} />
 							</div>
 							<div className="burger__block">
-								<BurgerConstructor />
+								<BurgerConstructor products={data} sum={610} />
 							</div>
 						</div>
 					</div>
