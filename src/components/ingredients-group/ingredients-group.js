@@ -4,10 +4,19 @@ import Ingredient from "../ingredient/ingredient";
 import PropTypes from "prop-types";
 
 const ingredientPropTypes = PropTypes.shape({
+	__v: PropTypes.number.isRequired,
+	_id: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	image: PropTypes.string,
+	type: PropTypes.string.isRequired,
+	proteins: PropTypes.number.isRequired,
+	fat: PropTypes.number.isRequired,
+	carbohydrates: PropTypes.number.isRequired,
+	calories: PropTypes.number.isRequired,
+	image: PropTypes.string.isRequired,
+	image_mobile: PropTypes.string.isRequired,
+	image_large: PropTypes.string.isRequired,
 	count: PropTypes.number,
-	price: PropTypes.number.isRequired
+	price: PropTypes.number.isRequired,
 });
 
 function IngredientsGroup(props) {
@@ -32,5 +41,5 @@ export default IngredientsGroup
 
 IngredientsGroup.propTypes = {
 	title: PropTypes.string.isRequired,
-	data: PropTypes.arrayOf(ingredientPropTypes).isRequired
+	data: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
 }

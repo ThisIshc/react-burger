@@ -5,14 +5,23 @@ import constructorStyle from './burger-constructor.module.css'
 import bun_1 from "../../images/ingredients/bun-01.png";
 
 const ingredientPropTypes = PropTypes.shape({
+	__v: PropTypes.number.isRequired,
+	_id: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	image: PropTypes.string,
+	type: PropTypes.string.isRequired,
+	proteins: PropTypes.number.isRequired,
+	fat: PropTypes.number.isRequired,
+	carbohydrates: PropTypes.number.isRequired,
+	calories: PropTypes.number.isRequired,
+	image: PropTypes.string.isRequired,
+	image_mobile: PropTypes.string.isRequired,
+	image_large: PropTypes.string.isRequired,
 	count: PropTypes.number,
-	price: PropTypes.number.isRequired
+	price: PropTypes.number.isRequired,
 });
 
 function BurgerConstructor(props) {
-	const products = useMemo(() => props.products.filter((item) => item.type === 'sauce' || item.type === 'main'), [props.products])
+	const products = useMemo(() => props.products.filter((item) => item.type !== 'bun'), [props.products])
 	return (
 		<div className={"burgerConstructor mt-25"}>
 			<div className={constructorStyle.burgerConstructor__list + " pl-4 pr-4"}>
@@ -67,6 +76,6 @@ function BurgerConstructor(props) {
 export default BurgerConstructor
 
 BurgerConstructor.propTypes = {
-	products: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+	products: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 	sum: PropTypes.number.isRequired
 }
