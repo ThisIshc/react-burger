@@ -1,0 +1,33 @@
+.burgerConstructor__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.burgerConstructor__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: calc(100vh - 570px);
+    overflow: auto;
+    margin-right: -16px;
+    padding-right: 8px;
+}
+.burgerConstructor__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+}
+.burgerConstructor__bottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.burgerConstructor__sum {
+    display: flex;
+    align-items: center;
+}
+.burgerConstructor__sum svg {
+    width: 36px;
+    height: 36px;
+}

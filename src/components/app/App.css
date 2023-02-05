@@ -1,0 +1,7 @@
+.burger__wrapper {
+    display: flex;
+    gap: 40px;
+}
+.burger__block {
+    width: 50%;
+}

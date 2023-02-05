@@ -1,0 +1,22 @@
+.ingredient {
+    position: relative;
+}
+.ingredient__counter {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.ingredient__price {
+    text-align: center;
+}
+.ingredient__name {
+    text-align: center;
+}
+.ingredient__img {
+    text-align: center;
+}
+img {
+    width: 100%;
+    max-width: 240px;
+    height: 120px;
+}
