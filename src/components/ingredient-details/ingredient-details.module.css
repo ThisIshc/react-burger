@@ -1,0 +1,25 @@
+.detailIngredient__content {
+    max-width: 520px;
+    margin: 0 auto;
+}
+.detailIngredient__img {
+    width: 100%;
+    padding: 0 20px;
+}
+.detailIngredient__img img {
+    width: 100%;
+    height: auto;
+}
+.detailIngredient__title {
+    text-align: center;
+}
+.detailIngredient__props {
+    display: flex;
+    justify-content: space-between;
+}
+.detailIngredient__prop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8585AD;
+}

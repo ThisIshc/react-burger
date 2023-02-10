@@ -1,8 +1,10 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from 'prop-types';
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyle from './burger-constructor.module.css'
 import bun_1 from "../../images/ingredients/bun-01.png";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 const ingredientPropTypes = PropTypes.shape({
 	__v: PropTypes.number.isRequired,
@@ -21,7 +23,17 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 function BurgerConstructor(props) {
+	const [state, setState] = useState({openModal: false})
+
 	const products = useMemo(() => props.products.filter((item) => item.type !== 'bun'), [props.products])
+
+	function handleClickOrder() {
+		setState({...state, openModal: true})
+	}
+	const closeModal = (e) => {
+		setState({...state, openModal: !e})
+	}
+
 	return (
 		<div className={"burgerConstructor mt-25"}>
 			<div className={constructorStyle.burgerConstructor__list + " pl-4 pr-4"}>
@@ -64,11 +76,16 @@ function BurgerConstructor(props) {
 					<CurrencyIcon type="primary" />
 				</div>
 				<div className="burgerConstructor__button ml-10">
-					<Button htmlType="button" type="primary" size="large">
+					<Button htmlType="button" type="primary" size="large" onClick={handleClickOrder}>
 						Оформить заказ
 					</Button>
 				</div>
 			</div>
+			{state.openModal &&
+				<Modal isOpen={state.openModal} onClose={closeModal} >
+					<OrderDetails />
+				</Modal>
+			}
 		</div>
 	)
 }

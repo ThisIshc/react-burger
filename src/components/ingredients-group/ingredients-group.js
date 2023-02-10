@@ -20,6 +20,10 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 function IngredientsGroup(props) {
+	const getIngredient = (id) => {
+		props.getIngredient(id)
+	}
+
 	return (
 		<div className="ingredientsGroup mb-10">
 			<div className="ingredientsGroup__title text text_type_main-medium mb-6">
@@ -28,7 +32,7 @@ function IngredientsGroup(props) {
 			<div className={styleIngredients.ingredientsGroup__list + " pl-4 pr-4"}>
 				{props.data.map((item, index) => (
 					<div className={styleIngredients.ingredientsGroup__item +" pr-3"} key={index}>
-						<Ingredient img={item.image} count={item.count} price={item.price} name={item.name} />
+						<Ingredient id={item._id} img={item.image} count={item.count} price={item.price} name={item.name} getIngredient={getIngredient} />
 					</div>
 					)
 				)}

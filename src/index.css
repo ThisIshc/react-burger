@@ -42,3 +42,7 @@ a {
   max-width: 1272px;
   margin: 0 auto;
 }
+
+.secondary-text {
+  color: #8585AD;
+}
