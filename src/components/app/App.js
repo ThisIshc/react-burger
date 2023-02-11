@@ -3,8 +3,7 @@ import './App.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-
-const API_URL = 'https://norma.nomoreparties.space/api/ingredients'
+import getIngredientsApi from "../../utils/burger-api";
 
 function App() {
 	const [state, setState] = useState({
@@ -13,14 +12,15 @@ function App() {
 		hasError: false
 	})
 
+	/* eslint-disable */
 	useEffect(() => {
 		getIngredients();
 	}, [])
+	/* eslint-enable */
 
 	const getIngredients = () => {
 		setState({...state, isLoading: true, hasError: false})
-		fetch(API_URL)
-			.then(res => res.json())
+		getIngredientsApi()
 			.then(data => setState({...state, data: data.data, isLoading: false}))
 			.catch(e => {
 				setState({...state, isLoading: false, hasError: true})

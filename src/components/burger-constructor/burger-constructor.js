@@ -2,7 +2,6 @@ import React, {useMemo, useState} from "react";
 import PropTypes from 'prop-types';
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyle from './burger-constructor.module.css'
-import bun_1 from "../../images/ingredients/bun-01.png";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 
@@ -23,15 +22,16 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 function BurgerConstructor(props) {
-	const [state, setState] = useState({openModal: false})
+	const [isOpen, setIsOpen] = useState(false)
 
+	const bun = useMemo(() => props.products.find((item) => item.type === 'bun'), [props.products])
 	const products = useMemo(() => props.products.filter((item) => item.type !== 'bun'), [props.products])
 
 	function handleClickOrder() {
-		setState({...state, openModal: true})
+		setIsOpen(true)
 	}
 	const closeModal = (e) => {
-		setState({...state, openModal: !e})
+		setIsOpen(!e)
 	}
 
 	return (
@@ -41,9 +41,9 @@ function BurgerConstructor(props) {
 					<ConstructorElement
 						type="top"
 						isLocked={true}
-						text="Краторная булка N-200i (верх)"
-						price={20}
-						thumbnail={bun_1}
+						text={bun.name + " верх"}
+						price={bun.price}
+						thumbnail={bun.image}
 					/>
 				</div>
 				<div className={constructorStyle.burgerConstructor__wrapper}>
@@ -64,9 +64,9 @@ function BurgerConstructor(props) {
 					<ConstructorElement
 						type="bottom"
 						isLocked={true}
-						text="Краторная булка N-200i (низ)"
-						price={20}
-						thumbnail={bun_1}
+						text={bun.name + " низ"}
+						price={bun.price}
+						thumbnail={bun.image}
 					/>
 				</div>
 			</div>
@@ -81,8 +81,8 @@ function BurgerConstructor(props) {
 					</Button>
 				</div>
 			</div>
-			{state.openModal &&
-				<Modal isOpen={state.openModal} onClose={closeModal} >
+			{isOpen &&
+				<Modal onClose={closeModal} >
 					<OrderDetails />
 				</Modal>
 			}

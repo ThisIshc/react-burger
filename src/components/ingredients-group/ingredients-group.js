@@ -21,7 +21,8 @@ const ingredientPropTypes = PropTypes.shape({
 
 function IngredientsGroup(props) {
 	const getIngredient = (id) => {
-		props.getIngredient(id)
+		const ingredientData = props.data.find(item => item._id === id)
+		props.getIngredient(ingredientData)
 	}
 
 	return (

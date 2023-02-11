@@ -29,8 +29,7 @@ function BurgerIngredients(props) {
 	const sauce = useMemo(() => props.ingredients.filter((item) => item.type === 'sauce'), [props.ingredients])
 	const main = useMemo(() => props.ingredients.filter((item) => item.type === 'main'), [props.ingredients])
 
-	const getIngredient = (id) => {
-		const ingredientData = props.ingredients.find(item => item._id === id)
+	const getIngredient = (ingredientData) => {
 		setState({...state, ingredient: ingredientData, openModal: true})
 	}
 
@@ -52,7 +51,7 @@ function BurgerIngredients(props) {
 				<IngredientsGroup title={"Начинки"} data={main} getIngredient={getIngredient} />
 			</div>
 			{state.openModal &&
-				<Modal title={'Детали ингредиента'} isOpen={state.openModal} onClose={closeModal} >
+				<Modal title={'Детали ингредиента'} onClose={closeModal} >
 					<IngredientDetails data={state.ingredient} />
 				</Modal>
 			}
