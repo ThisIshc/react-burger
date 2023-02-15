@@ -1,0 +1,28 @@
+.orderDetails {
+
+}
+.orderDetails__number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.orderDetails__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.orderDetails__icon svg {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.orderDetails__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

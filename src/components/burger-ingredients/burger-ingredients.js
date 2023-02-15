@@ -1,8 +1,10 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from 'prop-types';
 import Tabs from "../tabs/tabs";
 import style from "./burger-ingredients.module.css"
 import IngredientsGroup from "../ingredients-group/ingredients-group";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const ingredientPropTypes = PropTypes.shape({
 	__v: PropTypes.number.isRequired,
@@ -21,10 +23,19 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 function BurgerIngredients(props) {
+	const [state, setState] = useState({ingredient: null, openModal: false})
+
 	const buns = useMemo(() => props.ingredients.filter((item) => item.type === 'bun'), [props.ingredients])
 	const sauce = useMemo(() => props.ingredients.filter((item) => item.type === 'sauce'), [props.ingredients])
 	const main = useMemo(() => props.ingredients.filter((item) => item.type === 'main'), [props.ingredients])
 
+	const getIngredient = (ingredientData) => {
+		setState({...state, ingredient: ingredientData, openModal: true})
+	}
+
+	const closeModal = (e) => {
+		setState({...state, openModal: !e})
+	}
 
 	return (
 		<div className={"burgerIngredients"}>
@@ -35,10 +46,15 @@ function BurgerIngredients(props) {
 				<Tabs />
 			</div>
 			<div className={style.burgerIngredients__content}>
-				<IngredientsGroup title={"Булки"} data={buns} />
-				<IngredientsGroup title={"Соусы"} data={sauce} />
-				<IngredientsGroup title={"Начинки"} data={main} />
+				<IngredientsGroup title={"Булки"} data={buns} getIngredient={getIngredient} />
+				<IngredientsGroup title={"Соусы"} data={sauce} getIngredient={getIngredient} />
+				<IngredientsGroup title={"Начинки"} data={main} getIngredient={getIngredient} />
 			</div>
+			{state.openModal &&
+				<Modal title={'Детали ингредиента'} onClose={closeModal} >
+					<IngredientDetails data={state.ingredient} />
+				</Modal>
+			}
 		</div>
 	)
 }

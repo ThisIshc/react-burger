@@ -4,8 +4,11 @@ import styleIngredient from "./ingredient.module.css"
 import PropTypes from "prop-types";
 
 function Ingredient(props) {
+	const handlerIngredient = () => {
+		props.getIngredient(props.id)
+	}
 	return (
-		<div className={styleIngredient.ingredient}>
+		<div className={styleIngredient.ingredient} onClick={handlerIngredient}>
 			<div className={styleIngredient.ingredient__counter}>
 				{props.count > 0
 					? <Counter count={props.count} size="default" extraClass="m-1" />
@@ -33,6 +36,7 @@ function Ingredient(props) {
 export default Ingredient
 
 Ingredient.propTypes = {
+	id: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	img: PropTypes.string.isRequired,
 	count: PropTypes.number,
