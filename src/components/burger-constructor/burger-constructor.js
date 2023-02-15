@@ -1,37 +1,44 @@
-import React, {useMemo, useState} from "react";
-import PropTypes from 'prop-types';
+import React, {useMemo, useState, useContext} from "react";
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyle from './burger-constructor.module.css'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import {IngredientContext} from "../../utils/ingredient-context";
+import createOrder from "../../utils/order-api";
 
-const ingredientPropTypes = PropTypes.shape({
-	__v: PropTypes.number.isRequired,
-	_id: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	type: PropTypes.string.isRequired,
-	proteins: PropTypes.number.isRequired,
-	fat: PropTypes.number.isRequired,
-	carbohydrates: PropTypes.number.isRequired,
-	calories: PropTypes.number.isRequired,
-	image: PropTypes.string.isRequired,
-	image_mobile: PropTypes.string.isRequired,
-	image_large: PropTypes.string.isRequired,
-	count: PropTypes.number,
-	price: PropTypes.number.isRequired,
-});
 
 function BurgerConstructor(props) {
 	const [isOpen, setIsOpen] = useState(false)
+	const [order, setOrder] = useState({
+		order: {},
+		hasError: false
+	})
 
-	const bun = useMemo(() => props.products.find((item) => item.type === 'bun'), [props.products])
-	const products = useMemo(() => props.products.filter((item) => item.type !== 'bun'), [props.products])
+
+	const productsData = useContext(IngredientContext)
+
+	const bun = useMemo(() => productsData.find((item) => item.type === 'bun'), [productsData])
+	const products = useMemo(() => productsData.filter((item) => item.type !== 'bun'), [productsData])
+	let sum = bun.price * 2;
+	products.forEach((item) => {
+		sum += item.price
+	})
 
 	function handleClickOrder() {
-		setIsOpen(true)
+		const ingredientsId = products.map((item) => item._id)
+		return createOrder(ingredientsId)
+			.then(data => {
+				setOrder({...order, order: data, hasError: false})
+				setIsOpen(true)
+			})
+			.catch(e => {
+				setOrder({...order, hasError: true})
+			})
 	}
+
 	const closeModal = (e) => {
 		setIsOpen(!e)
+		setOrder({...order, hasError: false})
 	}
 
 	return (
@@ -72,7 +79,7 @@ function BurgerConstructor(props) {
 			</div>
 			<div className={constructorStyle.burgerConstructor__bottom + " mt-10"}>
 				<div className={constructorStyle.burgerConstructor__sum + " text text_type_digits-medium"}>
-					<span className={"mr-2"}>{props.sum}</span>
+					<span className={"mr-2"}>{sum}</span>
 					<CurrencyIcon type="primary" />
 				</div>
 				<div className="burgerConstructor__button ml-10">
@@ -81,9 +88,14 @@ function BurgerConstructor(props) {
 					</Button>
 				</div>
 			</div>
-			{isOpen &&
+			{isOpen && !order.hasError &&
 				<Modal onClose={closeModal} >
-					<OrderDetails />
+					<OrderDetails dataOrder={order.order} />
+				</Modal>
+			}
+			{order.hasError &&
+				<Modal onClose={closeModal} >
+					<div>Произошла ошибка при оформлении, попробуйте позже</div>
 				</Modal>
 			}
 		</div>
@@ -91,8 +103,3 @@ function BurgerConstructor(props) {
 }
 
 export default BurgerConstructor
-
-BurgerConstructor.propTypes = {
-	products: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-	sum: PropTypes.number.isRequired
-}
