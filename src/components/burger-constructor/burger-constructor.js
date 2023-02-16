@@ -8,7 +8,6 @@ import createOrder from "../../utils/order-api";
 
 
 function BurgerConstructor(props) {
-	const [isOpen, setIsOpen] = useState(false)
 	const [order, setOrder] = useState({
 		order: {},
 		hasError: false
@@ -19,17 +18,20 @@ function BurgerConstructor(props) {
 
 	const bun = useMemo(() => productsData.find((item) => item.type === 'bun'), [productsData])
 	const products = useMemo(() => productsData.filter((item) => item.type !== 'bun'), [productsData])
-	let sum = bun.price * 2;
-	products.forEach((item) => {
-		sum += item.price
-	})
+	const sum = useMemo(() => {
+		let sumIngredients = 0
+		sumIngredients = bun.price * 2
+		products.forEach((item) => {
+			sumIngredients += item.price
+		})
+		return sumIngredients
+	}, [bun, products])
 
 	function handleClickOrder() {
 		const ingredientsId = products.map((item) => item._id)
 		return createOrder(ingredientsId)
 			.then(data => {
 				setOrder({...order, order: data, hasError: false})
-				setIsOpen(true)
 			})
 			.catch(e => {
 				setOrder({...order, hasError: true})
@@ -37,7 +39,6 @@ function BurgerConstructor(props) {
 	}
 
 	const closeModal = (e) => {
-		setIsOpen(!e)
 		setOrder({...order, hasError: false})
 	}
 
@@ -88,9 +89,9 @@ function BurgerConstructor(props) {
 					</Button>
 				</div>
 			</div>
-			{isOpen && !order.hasError &&
+			{order.order.number !== undefined && !order.hasError &&
 				<Modal onClose={closeModal} >
-					<OrderDetails dataOrder={order.order} />
+					<OrderDetails dataOrder={order.order}  />
 				</Modal>
 			}
 			{order.hasError &&

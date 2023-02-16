@@ -10,7 +10,7 @@ const orderPropTypes = PropTypes.shape({
 		number: PropTypes.number.isRequired
 	},
 	success: PropTypes.bool.isRequired
-});
+}).isRequired;
 
 export default function OrderDetails(props) {
 	return (
@@ -34,5 +34,5 @@ export default function OrderDetails(props) {
 }
 
 OrderDetails.propTypes = {
-	dataOrder: orderPropTypes.isRequired
+	dataOrder: orderPropTypes
 }
