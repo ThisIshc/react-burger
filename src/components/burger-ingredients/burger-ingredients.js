@@ -5,7 +5,8 @@ import IngredientsGroup from "../ingredients-group/ingredients-group";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
-import {getCurrentIngredient, clearCurrentIngredient, updateTabs} from "../../services/store";
+import {updateTabs} from "../../services/burger-slice";
+import {getCurrentIngredient, clearCurrentIngredient} from "../../services/ingredient-slice";
 
 function BurgerIngredients(props) {
 	const dispatch = useDispatch()
@@ -41,7 +42,7 @@ function BurgerIngredients(props) {
 			observer.observe(group)
 		})
 		return () => observer.disconnect()
-	}, [])
+	}, [dispatch])
 
 	return (
 		<div className={"burgerIngredients"}>

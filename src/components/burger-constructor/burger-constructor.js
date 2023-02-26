@@ -1,18 +1,21 @@
-import React, { useCallback, useMemo } from "react";
+import React, {useCallback, useEffect, useMemo} from "react";
 import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyle from './burger-constructor.module.css'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
-import {addIngredient, fetchCreateOrder, clearOrder, updateList} from "../../services/store";
+// import {addIngredient, fetchCreateOrder, clearOrder, updateList, } from "../../services/store";
+import {addIngredient, fetchCreateOrder, clearOrder, updateList } from "../../services/burger-constructor-slice";
+import {updateData} from "../../services/burger-slice";
 import { v4 as uuidv4 } from 'uuid';
 import IngredientConstructor from "../ingredient-constructor/ingredient-constructor";
 
+const getDataConstructor = (state) => state.order
 
 function BurgerConstructor(props) {
 	const dispatch = useDispatch()
-	const dataConstructor = useSelector(state => state.order)
+	const dataConstructor = useSelector(getDataConstructor)
 
 	const bun = useMemo(() => dataConstructor.buns.find((item) => item.type === 'bun'), [dataConstructor])
 	const products = useMemo(() => dataConstructor.ingredients.filter((item) => item.type !== 'bun'), [dataConstructor])
@@ -29,15 +32,22 @@ function BurgerConstructor(props) {
 	}, [bun, products])
 
 	function handleClickOrder() {
-		const ingredientsId = products.map((item) => item.id)
+		const productsIds = products.map((item) => item.id)
+		const ingredientsId = [...productsIds, bun.id, bun.id]
 		dispatch(fetchCreateOrder(ingredientsId))
 	}
+
+	useEffect(() => {
+		if (products.length || bun) {
+			dispatch(updateData({products: products, bun: bun}))
+		}
+	}, [products, bun, dispatch])
 
 	const closeModal = (e) => {
 		dispatch(clearOrder())
 	}
 
-	const [{isHover}, dropTargetRef] = useDrop({
+	const [, dropTargetRef] = useDrop({
 		accept: 'ingredient',
 		collect: monitor => ({
 			isHover: monitor.isOver()
@@ -87,6 +97,9 @@ function BurgerConstructor(props) {
 							thumbnail={bun.image}
 						/>
 					</div>
+				}
+				{ !(bun && products) &&
+					<div>Собери свой бургер <br/> перенесите ингредиенты в эту область</div>
 				}
 			</div>
 			<div className={constructorStyle.burgerConstructor__bottom + " mt-10"}>

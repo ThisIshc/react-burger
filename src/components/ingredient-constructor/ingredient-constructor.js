@@ -3,7 +3,8 @@ import {DragIcon, ConstructorElement} from "@ya.praktikum/react-developer-burger
 import {useDrag, useDrop} from "react-dnd";
 import style from "./ingredient-constructor.module.css"
 import {useDispatch} from "react-redux";
-import {deleteIngredientConstructor} from "../../services/store";
+import {deleteIngredientConstructor} from "../../services/burger-constructor-slice";
+import {updateData} from "../../services/burger-slice";
 
 function IngredientConstructor({item, index, moveCard }) {
 	const dispatch = useDispatch()
@@ -58,6 +59,7 @@ function IngredientConstructor({item, index, moveCard }) {
 
 	const removeIngredient = (e) => {
 		dispatch(deleteIngredientConstructor({itemId: item.dragId}))
+		dispatch(updateData({item: item, type: 'remove'}))
 	}
 
 	return (
