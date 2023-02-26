@@ -3,32 +3,21 @@ import './App.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import getIngredientsApi from "../../utils/burger-api";
-import {IngredientContext} from "../../utils/ingredient-context";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchIngredients} from "../../services/store";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
 function App() {
-	const [state, setState] = useState({
-		data: [],
-		isLoading: false,
-		hasError: false
-	})
+	const dispatch = useDispatch()
+	const ingredients = useSelector(state => state.burger)
 
-	/* eslint-disable */
 	useEffect(() => {
-		getIngredients();
-	}, [])
-	/* eslint-enable */
+		dispatch(fetchIngredients())
+	}, [dispatch])
 
-	const getIngredients = () => {
-		setState({...state, isLoading: true, hasError: false})
-		getIngredientsApi()
-			.then(data => setState({...state, data: data.data, isLoading: false}))
-			.catch(e => {
-				setState({...state, isLoading: false, hasError: true})
-			})
-	}
+	const {data, isLoading, hasError} = ingredients
 
-	const {data, isLoading, hasError} = state
 	return (
 		<div className="App">
 			{isLoading && 'Загрузка'}
@@ -39,16 +28,16 @@ function App() {
 					<main>
 						<div className="burger__content">
 							<div className="container">
-								<IngredientContext.Provider value={data}>
-									<div className="burger__wrapper">
+								<div className="burger__wrapper">
+									<DndProvider backend={HTML5Backend}>
 										<div className="burger__block">
 											<BurgerIngredients />
 										</div>
 										<div className="burger__block">
 											<BurgerConstructor />
 										</div>
-									</div>
-								</IngredientContext.Provider>
+									</DndProvider>
+								</div>
 							</div>
 						</div>
 					</main>

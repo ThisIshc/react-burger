@@ -5,11 +5,7 @@ import orderIcon from '../../images/order-icon.png'
 import style from './order-details.module.css'
 
 const orderPropTypes = PropTypes.shape({
-	name: PropTypes.string.isRequired,
-	order: {
-		number: PropTypes.number.isRequired
-	},
-	success: PropTypes.bool.isRequired
+	number: PropTypes.number.isRequired
 }).isRequired;
 
 export default function OrderDetails(props) {
@@ -17,7 +13,7 @@ export default function OrderDetails(props) {
 		<div className={'orderDetails mb-15'}>
 			<div className="orderDetails__content">
 				<div className={style.orderDetails__number}>
-					<span className={'text text_type_digits-large mb-8'}>{props.dataOrder.order.number}</span>
+					<span className={'text text_type_digits-large mb-8'}>{props.dataOrder.number}</span>
 					<b className={'text text_type_main-medium mb-15'}>идентификатор заказа</b>
 				</div>
 				<div className={style.orderDetails__icon + " mb-15"}>
