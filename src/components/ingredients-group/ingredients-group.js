@@ -33,7 +33,7 @@ function IngredientsGroup(props) {
 			<div className={styleIngredients.ingredientsGroup__list + " pl-4 pr-4"}>
 				{props.data.map((item, index) => (
 					<div className={styleIngredients.ingredientsGroup__item +" pr-3"} key={index}>
-						<Ingredient id={item._id} img={item.image} count={item.count} price={item.price} name={item.name} getIngredient={getIngredient} />
+						<Ingredient id={item._id} img={item.image} count={item.count} price={item.price} name={item.name} type={item.type} getIngredient={getIngredient} />
 					</div>
 					)
 				)}

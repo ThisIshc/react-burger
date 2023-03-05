@@ -1,7 +1,14 @@
+.burgerConstructor {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .burgerConstructor__list {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    height: 100%;
 }
 .burgerConstructor__wrapper {
     display: flex;
@@ -30,4 +37,7 @@
 .burgerConstructor__sum svg {
     width: 36px;
     height: 36px;
+}
+.onHover {
+    border: 1px solid red;
 }
