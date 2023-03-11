@@ -1,15 +1,17 @@
 import React from "react";
-import menuItemStyles from "./menu-item.module.css"
+import styles from "./menu-item.module.css"
 import PropTypes from "prop-types";
+import {NavLink} from "react-router-dom";
 
 function MenuItem (props) {
-	const styleLink = props.type === "secondary" ? `${menuItemStyles.link_secondary}` : `${menuItemStyles.link_primary}`;
 	return (
 		<div className={"pl-5 pr-5 pt-4 pb-4"}>
-			<a href={props.link} className={menuItemStyles.link + " " + styleLink}>
+			<NavLink to={{ pathname: props.link }}
+					 className={({ isActive }) => isActive ? styles.link + ' ' + styles.active : styles.link}
+			>
 				{props.children}
 				<span className={"ml-2"}>{props.text}</span>
-			</a>
+			</NavLink>
 		</div>
 	)
 }
