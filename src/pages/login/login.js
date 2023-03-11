@@ -1,6 +1,6 @@
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./login.module.css"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchUserAuth} from "../../services/user-slice";
@@ -12,7 +12,6 @@ function LoginPage() {
 	})
 	const dispatch = useDispatch()
 	const userData = useSelector(data => data.user)
-
 
 	const onChange = (e) => {
 		setState({...state, [e.target.name]: e.target.value})

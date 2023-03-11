@@ -70,6 +70,7 @@ export const userSlice = createSlice({
 	name: 'user',
 	initialState: {
 		resetData: null,
+		resetPassword: null,
 		userData: null,
 		errorMessage: ''
 	},
@@ -81,11 +82,11 @@ export const userSlice = createSlice({
 			state.resetData = action.payload
 		})
 		builder.addCase(fetchResetPassword.fulfilled, (state, action) => {
-			state.resetData = action.payload
+			state.resetPassword = action.payload
 		})
 		builder.addCase(fetchUserRegister.fulfilled, (state, action) => {
 			if (action.payload.success) {
-				state.userAuthData = action.payload.user
+				state.userData = action.payload.user
 				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200})
 				localStorage.setItem('refreshToken', action.payload.refreshToken)
 			} else {
@@ -118,6 +119,9 @@ export const userSlice = createSlice({
 				state.errorMessage = action.payload.message
 			}
 		})
+		builder.addCase(fetchGetUser.rejected, (state, action) => {
+			state.userData = 'failed'
+		})
 		builder.addCase(fetchUpdateUser.fulfilled, (state, action) => {
 			if (action.payload.success) {
 				state.userData = action.payload.user
@@ -129,6 +133,7 @@ export const userSlice = createSlice({
 			if (action.payload.success) {
 				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200})
 				localStorage.setItem('refreshToken', action.payload.refreshToken)
+				state.userData = null
 			} else {
 				state.errorMessage = action.payload.message
 			}

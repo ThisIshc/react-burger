@@ -18,11 +18,11 @@ function RegisterPage() {
 	const userData = useSelector(data => data.user)
 	const navigate = useNavigate();
 
-	// useEffect(() => {
-	// 	if (getCookie('accessToken')) {
-	// 		navigate('/')
-	// 	}
-	// }, [userData, navigate])
+	useEffect(() => {
+		if (getCookie('accessToken')) {
+			navigate('/')
+		}
+	}, [userData, navigate])
 
 	const onChange = (e) => {
 		setState({...state, [e.target.name]: e.target.value})

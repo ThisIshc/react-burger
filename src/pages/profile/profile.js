@@ -22,6 +22,7 @@ function ProfilePage() {
 			disabled: true,
 			icon: "EditIcon"
 		},
+		changeData: false
 	})
 	const dispatch = useDispatch()
 	const userData = useSelector(state => state.user.userData)
@@ -48,7 +49,8 @@ function ProfilePage() {
 			[e.target.name]: {
 				...state[e.target.name],
 				value: e.target.value
-			}
+			},
+			changeData: true
 		})
 	}
 	const onIconClick = (e) => {
@@ -78,6 +80,10 @@ function ProfilePage() {
 			name: state.name.value,
 			password: state.password.value,
 		}))
+		setState({
+			...state,
+			changeData: false
+		})
 	}
 	const cancelUpdate = () => {
 		setState({
@@ -93,7 +99,8 @@ function ProfilePage() {
 			password: {
 				...state.password,
 				value: ''
-			}
+			},
+			changeData: false
 		})
 	}
 
@@ -143,23 +150,17 @@ function ProfilePage() {
 								disabled={state.password.disabled}
 								onIconClick={onIconClick}
 							/>
-							{/*<PasswordInput*/}
-							{/*	onChange={onChange}*/}
-							{/*	value={state.password.value}*/}
-							{/*	name={'password'}*/}
-							{/*	icon={state.password.icon}*/}
-							{/*	disabled={state.password.disabled}*/}
-							{/*	onIconClick={onIconClick}*/}
-							{/*/>*/}
 						</div>
-						<div className={style.profile__bottom}>
-							<Button htmlType="button" type="secondary" size="medium" onClick={cancelUpdate}>
-								Отмена
-							</Button>
-							<Button htmlType="submit" type="primary" size="medium">
-								Сохранить
-							</Button>
-						</div>
+						{state.changeData &&
+							<div className={style.profile__bottom}>
+								<Button htmlType="button" type="secondary" size="medium" onClick={cancelUpdate}>
+									Отмена
+								</Button>
+								<Button htmlType="submit" type="primary" size="medium">
+									Сохранить
+								</Button>
+							</div>
+						}
 					</form>
 				</div>
 			</div>

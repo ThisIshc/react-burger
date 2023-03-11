@@ -35,10 +35,10 @@ function App() {
 		dispatch(fetchIngredients())
 		if (!userData && getCookie('accessToken')) {
 			dispatch(fetchGetUser())
-		} else if (!getCookie('accessToken') && localStorage.getItem("refreshToken") !== null) {
+		} else if ((!getCookie('accessToken') && localStorage.getItem("refreshToken") !== null) || userData === 'failed') {
 			dispatch(fetchUpdateToken())
 		}
-	}, [])
+	}, [userData])
 
 	return (
 		<>

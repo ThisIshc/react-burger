@@ -1,9 +1,9 @@
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./reset-password.module.css"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {fetchResetPassword} from "../../services/user-slice";
-import {useDispatch} from "react-redux";
-import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
 
 
 function ResetPage() {
@@ -12,6 +12,14 @@ function ResetPage() {
 		token: '',
 	})
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const resetPassword = useSelector(data => data.user.resetPassword)
+
+	useEffect(() => {
+		if (resetPassword.success) {
+			navigate('/login')
+		}
+	})
 
 	const onChange = (e) => {
 		setState({...state, [e.target.name]: e.target.value})
