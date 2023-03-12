@@ -8,7 +8,7 @@ import {
 	userRegistration
 } from "../utils/user-api";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {setCookie} from "../utils/cookie";
+import {getCookie, setCookie} from "../utils/cookie";
 
 export const fetchPasswordReset = createAsyncThunk(
 	'user/fetchPasswordReset',
@@ -48,7 +48,13 @@ export const fetchGetUser = createAsyncThunk(
 export const fetchUpdateUser = createAsyncThunk(
 	'user/fetchUpdateUser',
 	async function(userData) {
-		return await updateUser(userData)
+		try {
+			return await updateUser(userData)
+		} catch (err) {
+			const refreshToken = await updateToken()
+			setCookie('accessToken', refreshToken.accessToken, {"max-age": 1200, "path": "/"})
+			return await updateUser(userData)
+		}
 	}
 )
 
@@ -87,7 +93,7 @@ export const userSlice = createSlice({
 		builder.addCase(fetchUserRegister.fulfilled, (state, action) => {
 			if (action.payload.success) {
 				state.userData = action.payload.user
-				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200})
+				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200, "path": "/"})
 				localStorage.setItem('refreshToken', action.payload.refreshToken)
 			} else {
 				state.errorMessage = action.payload.message
@@ -101,7 +107,7 @@ export const userSlice = createSlice({
 		builder.addCase(fetchUserAuth.fulfilled, (state, action) => {
 			if (action.payload.success) {
 				state.userData = action.payload.user
-				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200})
+				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200, "path": "/"})
 				localStorage.setItem('refreshToken', action.payload.refreshToken)
 			} else {
 				state.errorMessage = action.payload.message
@@ -123,15 +129,17 @@ export const userSlice = createSlice({
 			state.userData = 'failed'
 		})
 		builder.addCase(fetchUpdateUser.fulfilled, (state, action) => {
-			if (action.payload.success) {
-				state.userData = action.payload.user
-			} else {
-				state.errorMessage = action.payload.message
+			if (action.payload) {
+				if (action.payload.success) {
+					state.userData = action.payload.user
+				} else {
+					state.errorMessage = action.payload.message
+				}
 			}
 		})
 		builder.addCase(fetchUpdateToken.fulfilled, (state, action) => {
 			if (action.payload.success) {
-				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200})
+				setCookie('accessToken', action.payload.accessToken, {"max-age": 1200, "path": "/"})
 				localStorage.setItem('refreshToken', action.payload.refreshToken)
 				state.userData = null
 			} else {
@@ -140,14 +148,14 @@ export const userSlice = createSlice({
 		})
 		builder.addCase(fetchUpdateToken.rejected, (state, action) => {
 			if (action.error.message) {
-				setCookie('accessToken', "", {"max-age": -1})
+				setCookie('accessToken', "", {"max-age": -1, "path": "/"})
 				localStorage.removeItem('refreshToken')
 				state.userData = null
 			}
 		})
 		builder.addCase(fetchLogout.fulfilled, (state, action) => {
 			if (action.payload.success) {
-				setCookie('accessToken', "", {"max-age": -1})
+				setCookie('accessToken', "", {"max-age": -1, "path": "/"})
 				localStorage.removeItem('refreshToken')
 				state.userData = null
 			} else {

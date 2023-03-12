@@ -28,7 +28,7 @@ function ProfilePage() {
 	const userData = useSelector(state => state.user.userData)
 
 	useEffect(() => {
-		if (userData) {
+		if (userData && userData !== 'failed') {
 			setState({
 				...state,
 				email: {

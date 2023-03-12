@@ -16,7 +16,7 @@ function ResetPage() {
 	const resetPassword = useSelector(data => data.user.resetPassword)
 
 	useEffect(() => {
-		if (resetPassword.success) {
+		if (resetPassword) {
 			navigate('/login')
 		}
 	})
