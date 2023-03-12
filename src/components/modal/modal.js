@@ -10,7 +10,7 @@ const modalRoot = document.querySelector('#react-modals')
 export default function Modal(props) {
 	/* eslint-disable */
 	const onClose = () => {
-		props.onClose(true)
+		props.onClose()
 	}
 	/* eslint-enable */
 

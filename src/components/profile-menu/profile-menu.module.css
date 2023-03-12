@@ -1,0 +1,17 @@
+.menu__links {
+    margin-bottom: 80px;
+}
+.menu__link {
+    padding: 17px 0;
+    color: #8585AD;
+}
+.menu__link a {
+    color: #8585AD;
+}
+a.active {
+    color: #F2F2F3;
+}
+.menu__bottom {
+    color: #8585AD;
+    opacity: 0.4;
+}

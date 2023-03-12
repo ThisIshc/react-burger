@@ -2,6 +2,7 @@ import React from "react";
 import styleIngredients from "./ingredients-group.module.css";
 import Ingredient from "../ingredient/ingredient";
 import PropTypes from "prop-types";
+import {Link, NavLink, useLocation} from "react-router-dom";
 
 const ingredientPropTypes = PropTypes.shape({
 	__v: PropTypes.number.isRequired,
@@ -20,6 +21,8 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 function IngredientsGroup(props) {
+	const location = useLocation()
+
 	const getIngredient = (id) => {
 		const ingredientData = props.data.find(item => item._id === id)
 		props.getIngredient(ingredientData)
@@ -32,9 +35,15 @@ function IngredientsGroup(props) {
 			</div>
 			<div className={styleIngredients.ingredientsGroup__list + " pl-4 pr-4"}>
 				{props.data.map((item, index) => (
-					<div className={styleIngredients.ingredientsGroup__item +" pr-3"} key={index}>
+					<Link to={{
+						pathname: '/ingredients/'+ item._id,
+
+					}}
+						 state={{background: location}}
+						  className={styleIngredients.ingredientsGroup__item +" pr-3"}
+						  key={index}>
 						<Ingredient id={item._id} img={item.image} count={item.count} price={item.price} name={item.name} type={item.type} getIngredient={getIngredient} />
-					</div>
+					</Link>
 					)
 				)}
 			</div>

@@ -2,16 +2,13 @@ import React, {useMemo, useRef, useEffect} from "react";
 import Tabs from "../tabs/tabs";
 import style from "./burger-ingredients.module.css"
 import IngredientsGroup from "../ingredients-group/ingredients-group";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
 import {updateTabs} from "../../services/burger-slice";
-import {getCurrentIngredient, clearCurrentIngredient} from "../../services/ingredient-slice";
+import {getCurrentIngredient} from "../../services/ingredient-slice";
 
 function BurgerIngredients(props) {
 	const dispatch = useDispatch()
 	const ingredients = useSelector(state => state.burger.data)
-	const currentIngredient = useSelector(state => state.ingredient)
 	const tabs = useSelector(state => state.burger.tabs)
 
 	const rootRef = useRef()
@@ -21,10 +18,6 @@ function BurgerIngredients(props) {
 
 	const getIngredient = (ingredientData) => {
 		dispatch(getCurrentIngredient({ingredient: ingredientData}))
-	}
-
-	const closeModal = (e) => {
-		dispatch(clearCurrentIngredient({ingredient: null}))
 	}
 
 	useEffect(() => {
@@ -57,11 +50,6 @@ function BurgerIngredients(props) {
 				<IngredientsGroup title={"Начинки"} data={main} getIngredient={getIngredient} />
 				<IngredientsGroup title={"Соусы"} data={sauce} getIngredient={getIngredient} />
 			</div>
-			{currentIngredient.ingredient &&
-				<Modal title={'Детали ингредиента'} onClose={closeModal} >
-					<IngredientDetails data={currentIngredient.ingredient} />
-				</Modal>
-			}
 		</div>
 	)
 }

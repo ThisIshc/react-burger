@@ -9,17 +9,17 @@ function AppHeader() {
 			<div className="container p-4">
 				<div className={headerStyles.header__content}>
 					<nav className={headerStyles.header__menu}>
-						<MenuItem link={"#"} text={"Конструктор"}>
-							<BurgerIcon type={"primary"}/>
+						<MenuItem link={"/"} text={"Конструктор"}>
+							<BurgerIcon />
 						</MenuItem>
-						<MenuItem link={"#"} text={"Лента заказов"} type={"secondary"}>
-							<ListIcon type={"secondary"}/>
+						<MenuItem link={"/order"} text={"Лента заказов"} type={"secondary"}>
+							<ListIcon />
 						</MenuItem>
 					</nav>
 					<Logo />
 					<nav className="header__menu">
-						<MenuItem link={"#"} text={"Личный кабинет"} type={"secondary"}>
-							<ProfileIcon type={"secondary"}/>
+						<MenuItem link={"/profile"} text={"Личный кабинет"}>
+							<ProfileIcon />
 						</MenuItem>
 					</nav>
 				</div>

@@ -2,13 +2,21 @@
     margin-right: 8px;
     display: flex;
     align-items: center;
+    color: #8585AD;
+}
+.link a {
+    display: flex;
+    align-items: center;
+}
+.link svg {
+    fill: #8585AD;
+}
+.active {
+    color: #F2F2F3;
+}
+.active svg {
+    fill: #F2F2F3;
 }
 .link:last-of-type {
     margin-right: 0;
-}
-.link_primary {
-    color: #F2F2F3;
-}
-.link_secondary {
-    color: #8585AD;
 }
