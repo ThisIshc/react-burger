@@ -1,3 +1,12 @@
+.detailIngredient {
+    height: calc(100vh - 88px);
+    padding-top: 120px;
+}
+.detailIngredient.isModal {
+    height: auto;
+    padding-top: 0;
+}
+
 .detailIngredient__content {
     max-width: 520px;
     margin: 0 auto;
