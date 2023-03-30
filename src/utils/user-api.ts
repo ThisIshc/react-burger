@@ -1,4 +1,5 @@
 import {getCookie} from "./cookie";
+import {checkResponse} from "./response";
 
 const API_URL = 'https://norma.nomoreparties.space/api/'
 
@@ -83,9 +84,4 @@ export function userLogout():Promise<any> {
 			'Content-Type': 'application/json'
 		}
 	}).then(res => checkResponse(res))
-}
-
-
-const checkResponse = (res:any) => {
-	return res.ok ? res.json() : res.json().then((err: Error) => Promise.reject(err))
 }

@@ -7,7 +7,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {addIngredient, fetchCreateOrder, clearOrder, updateList } from "../../services/burger-constructor-slice";
 import {updateData} from "../../services/burger-slice";
-// @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import IngredientConstructor from "../ingredient-constructor/ingredient-constructor";
 
@@ -29,9 +28,11 @@ interface IDataConstructor {
 	hasError: boolean
 }
 
+const getDataConstructor = (state:IDataConstructor) => state.order
+
 const BurgerConstructor:FunctionComponent = () => {
 	const dispatch = useDispatch()
-	const dataConstructor:IDataConstructor | any = useSelector<IDataConstructor>((state) => state.order)
+	const dataConstructor:IDataConstructor | any = useSelector(getDataConstructor)
 
 	const bun = useMemo(() => {
 		if (dataConstructor && dataConstructor.buns && Array.isArray(dataConstructor.buns)) {

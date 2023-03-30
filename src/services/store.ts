@@ -1,5 +1,4 @@
 import {configureStore} from "@reduxjs/toolkit";
-// @ts-ignore
 import logger from 'redux-logger'
 import {burgerSlice} from "./burger-slice";
 import {ingredientSlice} from "./ingredient-slice";
