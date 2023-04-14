@@ -25,6 +25,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+header {
+  flex: 0 0 auto;
+}
+main {
+  max-height: calc(100vh - 88px);
+  flex: 1 0 auto;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

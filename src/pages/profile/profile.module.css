@@ -10,8 +10,10 @@
     width: 100%;
 }
 .profile__content {
-    max-width: 480px;
+    max-width: calc(100% - 320px);
     width: 100%;
+    max-height: calc(100vh - 210px);
+    overflow: auto;
 }
 .profile__bottom {
     display: flex;

@@ -18,7 +18,7 @@ const ProfileMenu:FunctionComponent = () => {
 		<div className="menu">
 			<div className={style.menu__links + " text text_type_main-medium mb-20"}>
 				<div className={style.menu__link}>
-					<NavLink to={{pathname: '/profile'}} className={({ isActive }) => isActive ? style.active : ''}>Профиль</NavLink>
+					<NavLink to={{pathname: '/profile/'}} className={({ isActive }) => isActive ? style.active : ''}>Профиль</NavLink>
 				</div>
 				<div className={style.menu__link}>
 					<NavLink to={{pathname: '/profile/orders'}} className={({ isActive }) => isActive ? style.active : ''}>История заказов</NavLink>

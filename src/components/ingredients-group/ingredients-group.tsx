@@ -41,8 +41,7 @@ const IngredientsGroup:FunctionComponent<TIngredientsGroupProps> = (props) => {
 			<div className={styleIngredients.ingredientsGroup__list + " pl-4 pr-4"}>
 				{props.data.map((item, index) => (
 					<Link to={{
-						pathname: '/ingredients/'+ item._id,
-
+						pathname: '/ingredients/'+ item._id
 					}}
 						 state={{background: location}}
 						  className={styleIngredients.ingredientsGroup__item +" pr-3"}

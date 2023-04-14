@@ -6,19 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {updateTabs} from "../../services/burger-slice";
 import {getCurrentIngredient} from "../../services/ingredient-slice";
 import {TIngredient} from "../../types/ingredient";
+import {TBurgerData, TTab} from "../../types/burger";
 
-type TTab = {
-	value: string,
-	active: boolean,
-	onClick: () => {}
-}
-
-type TBurgerData = {
-	readonly burger: {
-		readonly data: TIngredient[]
-		readonly tabs: TTab[]
-	}
-}
 
 const BurgerIngredients:FunctionComponent = () => {
 	const dispatch = useDispatch()
@@ -39,7 +28,7 @@ const BurgerIngredients:FunctionComponent = () => {
 	}, [ingredients])
 	const main = useMemo(() => {
 		if (Array.isArray(ingredients)) {
-			return ingredients.filter((item) => item.type === 'sauce')
+			return ingredients.filter((item) => item.type === 'main')
 		}
 	}, [ingredients])
 
