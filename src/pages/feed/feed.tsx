@@ -1,7 +1,6 @@
 import {FunctionComponent, useEffect} from "react";
 import styles from "./feed.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {wsConnectionClose} from "../../services/socket-slice";
 import FeedCard from "../../components/feed-card/feed-card";
 import {TFeedItem} from "../../types/feed";
 import {TIngredient} from "../../types/ingredient";
@@ -29,7 +28,7 @@ const FeedPage:FunctionComponent = () => {
 	useEffect(() => {
 		dispatch({type: 'WS_CONNECTION_START'})
 		return () => {
-			dispatch(wsConnectionClose)
+			dispatch({type: 'WS_CONNECTION_CLOSE'})
 		}
 	}, [])
 

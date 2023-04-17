@@ -6,7 +6,6 @@ import {Link, useLocation} from "react-router-dom";
 import {TSocketData} from "../../types/socket";
 import {TIngredient} from "../../types/ingredient";
 import {TBurgerData} from "../../types/burger";
-import {wsConnectionClose} from "../../services/socket-slice";
 import {TFeedItem} from "../../types/feed";
 import FeedCard from "../../components/feed-card/feed-card";
 import {getCurrentFeed} from "../../services/feed-slice";
@@ -28,7 +27,7 @@ const ProfileOrdersPage = () => {
 	useEffect(() => {
 		dispatch({type: 'WS_CONNECTION_START'})
 		return () => {
-			dispatch(wsConnectionClose)
+			dispatch({type: 'WS_CONNECTION_CLOSE'})
 		}
 	}, [])
 

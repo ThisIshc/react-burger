@@ -65,7 +65,8 @@ const App = () => {
 					<Route path={"/reset-password"} element={<ProtectedRouteElement element={<ResetPage />} /> } />
 					<Route path={"/profile"} element={<ProtectedRouteElement element={<ProfilePage />} /> } />
 					<Route path={"/profile/orders"} element={<ProtectedRouteElement element={<ProfileOrdersPage />} />  } />
-					<Route path={"/feed"} element={<ProtectedRouteElement element={<FeedPage />} />  } />
+					{/*<Route path={"/feed"} element={<ProtectedRouteElement element={<FeedPage />} />  } />*/}
+					<Route path={"/feed"} element={<FeedPage />} />
 
 					{/*{ userData && getCookie('accessToken') ? (*/}
 					{/*	<>*/}

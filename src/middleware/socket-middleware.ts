@@ -16,6 +16,11 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 					socket = new WebSocket(`${wsUrl}?token=${token}`);
 				}
 			}
+			if (type === 'WS_CONNECTION_CLOSE') {
+				if (socket) {
+					socket.close()
+				}
+			}
 			if (socket) {
 				socket.onopen = event => {
 					dispatch(wsConnectionSuccess(event))
@@ -32,9 +37,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 				};
 
 				socket.onclose = event => {
-					if (socket) {
-						socket.close()
-					}
 					dispatch(wsConnectionClose(event))
 				};
 

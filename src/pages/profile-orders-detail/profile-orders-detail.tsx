@@ -6,7 +6,6 @@ import {TIngredient} from "../../types/ingredient";
 import {TBurgerData} from "../../types/burger";
 import {TFeedItem} from "../../types/feed";
 import {clearCurrentFeed, getCurrentFeed} from "../../services/feed-slice";
-import {wsConnectionClose} from "../../services/socket-slice";
 import styles from "../feed-detail/feed-detail.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -73,7 +72,7 @@ const ProfileOrdersDetailPage:FunctionComponent<IFeedDetailsProps> = ({isModal})
 			dispatch(getCurrentFeed(state.order))
 		}
 		return () => {
-			dispatch(wsConnectionClose)
+			dispatch({type: 'WS_CONNECTION_CLOSE'})
 			dispatch(clearCurrentFeed)
 		}
 	}, [])

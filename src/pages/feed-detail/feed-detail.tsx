@@ -3,7 +3,6 @@ import {FunctionComponent, useEffect, useMemo, useState} from "react";
 import styles from "./feed-detail.module.css"
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {wsConnectionClose} from "../../services/socket-slice";
 import {clearCurrentFeed, getCurrentFeed} from "../../services/feed-slice";
 import {TFeedItem} from "../../types/feed";
 import {ISocketMessage, TSocketData} from "../../types/socket";
@@ -73,7 +72,7 @@ const FeedDetailPage:FunctionComponent<IFeedDetailsProps> = ({isModal}) => {
 			dispatch(getCurrentFeed(state.order))
 		}
 		return () => {
-			dispatch(wsConnectionClose)
+			dispatch({type: 'WS_CONNECTION_CLOSE'})
 			dispatch(clearCurrentFeed)
 		}
 	}, [])
