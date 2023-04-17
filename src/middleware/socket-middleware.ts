@@ -1,5 +1,4 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
-import {useDispatch} from "react-redux";
 import {wsConnectionClose, wsConnectionError, wsConnectionSuccess, wsGetMessage} from "../services/socket-slice";
 import {getCookie} from "../utils/cookie";
 
@@ -7,7 +6,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 	return ((store: MiddlewareAPI) => {
 		let socket: WebSocket | null = null;
 		return next => (action: any) => {
-			const { dispatch, getState } = store;
+			const { dispatch } = store;
 			const { type, payload } = action;
 			if (type === 'WS_CONNECTION_START') {
 				if (document.location.href.indexOf('feed') !== -1) {
@@ -32,8 +31,10 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 					dispatch(wsGetMessage(data))
 				};
 
-				// функция, которая вызывается при закрытии соединения
 				socket.onclose = event => {
+					if (socket) {
+						socket.close()
+					}
 					dispatch(wsConnectionClose(event))
 				};
 

@@ -18,6 +18,9 @@ export const ProtectedRouteElement = ({element}: ProtectedRouteProps) => {
 		if (document.location.pathname === '/reset-password' && resetData !== null) {
 			return element
 		}
+		if (document.location.pathname === '/login') {
+			return element
+		}
 		return <Navigate to={"/login"} state={{form: location.pathname} } />
 	} else {
 		return locationPathname !== -1 ? <Navigate to={location?.state?.form || "/"} /> : element

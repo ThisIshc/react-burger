@@ -1,16 +1,16 @@
 import style from "./profile-menu.module.css"
 import {NavLink, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
 import {fetchLogout} from "../../services/user-slice";
 import {FunctionComponent, SyntheticEvent} from "react";
+import {useAppDispatch} from "../../services/store";
 
 const ProfileMenu:FunctionComponent = () => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
 	const handleLogout = (e:SyntheticEvent) => {
 		e.preventDefault()
-		dispatch<any>(fetchLogout())
+		dispatch(fetchLogout())
 		navigate('/')
 	}
 

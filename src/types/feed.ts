@@ -7,3 +7,7 @@ export type TFeedItem = {
 	readonly updatedAt: string,
 	readonly _id: string
 }
+
+export interface ISliceFeed {
+	feed: { feed: TFeedItem }
+}

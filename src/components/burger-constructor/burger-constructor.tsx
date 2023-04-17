@@ -3,12 +3,14 @@ import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-deve
 import constructorStyle from './burger-constructor.module.css'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {addIngredient, fetchCreateOrder, clearOrder, updateList } from "../../services/burger-constructor-slice";
 import {updateData} from "../../services/burger-slice";
 import { v4 as uuidv4 } from 'uuid';
 import IngredientConstructor from "../ingredient-constructor/ingredient-constructor";
+import {getCookie} from "../../utils/cookie";
+import {useAppDispatch} from "../../services/store";
 
 type TIngredient = {
 	readonly dragId: string,
@@ -31,7 +33,7 @@ interface IDataConstructor {
 const getDataConstructor = (state:IDataConstructor) => state.order
 
 const BurgerConstructor:FunctionComponent = () => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const dataConstructor:IDataConstructor | any = useSelector(getDataConstructor)
 
 	const bun = useMemo(() => {
@@ -59,7 +61,7 @@ const BurgerConstructor:FunctionComponent = () => {
 	const handleClickOrder = () => {
 		const productsIds = products ? products.map((item:TIngredient) => item.id) : null
 		const ingredientsId = [...productsIds, bun.id, bun.id]
-		dispatch<any>(fetchCreateOrder(ingredientsId))
+		dispatch(fetchCreateOrder(ingredientsId))
 	}
 
 	useEffect(() => {
@@ -133,11 +135,14 @@ const BurgerConstructor:FunctionComponent = () => {
 					<span className={"mr-2"}>{sum}</span>
 					<CurrencyIcon type="primary" />
 				</div>
-				<div className="burgerConstructor__button ml-10">
-					<Button htmlType="button" type="primary" size="large" onClick={handleClickOrder}>
-						Оформить заказ
-					</Button>
-				</div>
+				{getCookie('accessToken') &&
+					<div className="burgerConstructor__button ml-10">
+						<Button htmlType="button" type="primary" size="large" onClick={handleClickOrder}>
+							Оформить заказ
+						</Button>
+					</div>
+				}
+
 			</div>
 			{dataConstructor.order.number !== undefined &&
 				<Modal onClose={closeModal} >

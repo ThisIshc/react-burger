@@ -81,9 +81,9 @@ const FeedPage:FunctionComponent = () => {
 									</div>
 									<div className={`${styles.feed__table_complete} ${styles.feed__table_orders}`}>
 										{socketMessage && socketMessage.orders &&
-											socketMessage.orders.map((item:any) => {
+											socketMessage.orders.map((item:TFeedItem, index:number) => {
 												if (item.status === 'done') {
-													return <div className={'text text_type_digits-default mb-2'}>{item.number}</div>
+													return <div className={'text text_type_digits-default mb-2'} key={index}>{item.number}</div>
 												}
 												return null
 											})
@@ -96,9 +96,9 @@ const FeedPage:FunctionComponent = () => {
 									</div>
 									<div className={styles.feed__table_orders}>
 										{socketMessage && socketMessage.orders &&
-											socketMessage.orders.map((item:any) => {
+											socketMessage.orders.map((item:TFeedItem, index:number) => {
 												if (item.status !== 'done') {
-													return <div className={'text text_type_digits-default mb-2'}>{item.number}</div>
+													return <div className={'text text_type_digits-default mb-2'} key={index}>{item.number}</div>
 												}
 												return null
 											})

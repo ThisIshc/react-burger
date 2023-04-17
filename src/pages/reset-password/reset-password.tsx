@@ -2,9 +2,10 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import style from "./reset-password.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {fetchResetPassword} from "../../services/user-slice";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {ChangeEvent, SyntheticEvent, useEffect, useState} from "react";
-import {IUserData, TUserResetPassword} from "../../types/user";
+import {IUserData} from "../../types/user";
+import {useAppDispatch} from "../../services/store";
 
 
 function ResetPage() {
@@ -12,7 +13,7 @@ function ResetPage() {
 		password: '',
 		token: '',
 	})
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 	const resetPassword = useSelector((data: IUserData) => data.user.resetPassword)
 
@@ -27,7 +28,7 @@ function ResetPage() {
 	}
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault()
-		dispatch<any>(fetchResetPassword(state))
+		dispatch(fetchResetPassword(state))
 	}
 
 	return (

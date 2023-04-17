@@ -8,7 +8,7 @@ import RegisterPage from "../../pages/register/register";
 import ForgotPage from "../../pages/forgot-password/forgot-password";
 import ResetPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import NotFound404 from "../../pages/not-found-404/not-found-404";
 import {fetchGetUser, fetchUpdateToken} from "../../services/user-slice";
 import {getCookie} from "../../utils/cookie";
@@ -23,12 +23,14 @@ import FeedPage from "../../pages/feed/feed";
 import FeedDetailPage from "../../pages/feed-detail/feed-detail";
 import ProfileOrdersPage from "../../pages/profile-orders/profile-orders";
 import ProfileOrdersDetail from "../../pages/profile-orders-detail/profile-orders-detail";
+import {ISliceFeed} from "../../types/feed";
+import {useAppDispatch} from "../../services/store";
 
 const App = () => {
 	const userData = useSelector((state:IUserData) => state.user.userData)
 	const currentIngredient = useSelector((state:IIngredient) => state.ingredient)
-	const currentFeed = useSelector((state:any) => state.feed)
-	const dispatch = useDispatch()
+	const currentFeed = useSelector((state:ISliceFeed) => state.feed)
+	const dispatch = useAppDispatch()
 	const location = useLocation();
 	const navigate = useNavigate()
 	let background = location.state && location.state.background;
@@ -41,12 +43,12 @@ const App = () => {
 	}
 
 	useEffect(() => {
-		dispatch<any>(fetchIngredients())
+		dispatch(fetchIngredients())
 		if (!userData && getCookie('accessToken')) {
-			dispatch<any>(fetchGetUser())
+			dispatch(fetchGetUser())
 		} else if ((!getCookie('accessToken') && localStorage.getItem("refreshToken") !== null) || userData === null) {
 			if (localStorage.getItem('refreshToken')) {
-				dispatch<any>(fetchUpdateToken())
+				dispatch(fetchUpdateToken())
 			}
 		}
 	}, [userData])
@@ -57,30 +59,38 @@ const App = () => {
 			<main>
 				<Routes>
 					<Route path={"/"} element={<Home />} />
-					{ userData && getCookie('accessToken') ? (
-						<>
-							<Route path={"/login"} element={<ProtectedRouteElement element={<LoginPage />} /> } />
-							<Route path={"/register"} element={<ProtectedRouteElement element={<RegisterPage />} /> } />
-							<Route path={"/forgot-password"} element={<ProtectedRouteElement element={<ForgotPage />} /> } />
-							<Route path={"/reset-password"} element={<ProtectedRouteElement element={<ResetPage />} /> } />
-							<Route path={"/profile"} element={<ProfilePage /> } />
-							<Route path={"/profile/orders"} element={<ProfileOrdersPage /> } />
-							<Route path={"/feed"} element={<FeedPage /> } />
-						</>
-					) : (
-						<>
-							<Route path={"/login"} element={<LoginPage />} />
-							<Route path={"/register"} element={<RegisterPage /> } />
-							<Route path={"/forgot-password"} element={<ForgotPage />} />
-							<Route path={"/reset-password"} element={<ProtectedRouteElement element={<ResetPage />} />  } />
-							<Route path={"/profile"} element={<ProtectedRouteElement element={<ProfilePage />} /> } />
-							{/*<Route path={"/profile/orders"} element={<ProtectedRouteElement element={<ProfilePage />} /> } />*/}
-							<Route path={"/feed"} element={<FeedPage /> } />
-						</>
-					)
-					}
+					<Route path={"/login"} element={<ProtectedRouteElement element={<LoginPage />} /> } />
+					<Route path={"/register"} element={<ProtectedRouteElement element={<RegisterPage /> } /> } />
+					<Route path={"/forgot-password"} element={<ProtectedRouteElement element={<ForgotPage />} /> } />
+					<Route path={"/reset-password"} element={<ProtectedRouteElement element={<ResetPage />} /> } />
+					<Route path={"/profile"} element={<ProtectedRouteElement element={<ProfilePage />} /> } />
+					<Route path={"/profile/orders"} element={<ProtectedRouteElement element={<ProfileOrdersPage />} />  } />
+					<Route path={"/feed"} element={<ProtectedRouteElement element={<FeedPage />} />  } />
 
-					{ backgroundFeed && currentFeed.feed ? (
+					{/*{ userData && getCookie('accessToken') ? (*/}
+					{/*	<>*/}
+					{/*		<Route path={"/login"} element={<ProtectedRouteElement element={<LoginPage />} onlyUnAuth={true} /> } />*/}
+					{/*		<Route path={"/register"} element={<ProtectedRouteElement element={<RegisterPage />} /> } />*/}
+					{/*		<Route path={"/forgot-password"} element={<ProtectedRouteElement element={<ForgotPage />} /> } />*/}
+					{/*		<Route path={"/reset-password"} element={<ProtectedRouteElement element={<ResetPage />} /> } />*/}
+					{/*		<Route path={"/profile"} element={<ProfilePage /> } />*/}
+					{/*		<Route path={"/profile/orders"} element={<ProfileOrdersPage /> } />*/}
+					{/*		<Route path={"/feed"} element={<FeedPage /> } />*/}
+					{/*	</>*/}
+					{/*) : (*/}
+					{/*	<>*/}
+					{/*		<Route path={"/login"} element={<LoginPage />} />*/}
+					{/*		<Route path={"/register"} element={<RegisterPage /> } />*/}
+					{/*		<Route path={"/forgot-password"} element={<ForgotPage />} />*/}
+					{/*		<Route path={"/reset-password"} element={<ProtectedRouteElement element={<ResetPage />} />  } />*/}
+					{/*		<Route path={"/profile"} element={<ProtectedRouteElement element={<ProfilePage />} /> } />*/}
+					{/*		/!*<Route path={"/profile/orders"} element={<ProtectedRouteElement element={<ProfilePage />} /> } />*!/*/}
+					{/*		<Route path={"/feed"} element={<FeedPage /> } />*/}
+					{/*	</>*/}
+					{/*)*/}
+					{/*}*/}
+
+					{ backgroundFeed && currentFeed && currentFeed.feed ? (
 						<Route path={"/feed/:id"} element={
 							<Modal title={'Детали заказа'} onClose={closeModal} >
 								<FeedDetailPage isModal={true} />

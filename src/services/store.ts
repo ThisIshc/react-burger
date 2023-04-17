@@ -7,6 +7,7 @@ import {userSlice} from "./user-slice";
 import {socketMiddleware} from "../middleware/socket-middleware";
 import {socketSlice} from "./socket-slice";
 import {feedSlice} from "./feed-slice";
+import {useDispatch} from "react-redux";
 
 const wsUrl:string = 'wss://norma.nomoreparties.space/orders'
 
@@ -22,5 +23,9 @@ const store = configureStore({
 	middleware: (getDefaultMiddleaware) => getDefaultMiddleaware({serializableCheck: false}).concat(logger, socketMiddleware(wsUrl)),
 	devTools: process.env.NODE_ENV !== 'production'
 })
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
 
 export default store;

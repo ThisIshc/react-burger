@@ -2,9 +2,10 @@ import ProfileMenu from "../../components/profile-menu/profile-menu";
 import style from "./profile.module.css"
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {ChangeEvent, FunctionComponent, SyntheticEvent, useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {fetchUpdateUser} from "../../services/user-slice";
 import {IUserData, TUserDataResponse} from "../../types/user";
+import {useAppDispatch} from "../../services/store";
 
 type TInputs = {
 	email: object,
@@ -31,7 +32,7 @@ const ProfilePage:FunctionComponent = () => {
 		},
 		changeData: false
 	})
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const userData:TUserDataResponse = useSelector((state:IUserData) => state.user.userData)
 
 	useEffect(() => {
@@ -86,7 +87,7 @@ const ProfilePage:FunctionComponent = () => {
 	}
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault()
-		dispatch<any>(fetchUpdateUser({
+		dispatch(fetchUpdateUser({
 			email: state.email.value,
 			name: state.name.value,
 			password: state.password.value,
