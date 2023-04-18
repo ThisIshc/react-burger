@@ -9,6 +9,7 @@ import {
 } from "../utils/user-api";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {getCookie, setCookie} from "../utils/cookie";
+import {TUserDataResponse, TUserResetData, TUserResetPassword} from "../types/user";
 
 export const fetchPasswordReset = createAsyncThunk(
 	'user/fetchPasswordReset',
@@ -72,14 +73,23 @@ export const fetchLogout = createAsyncThunk(
 	}
 )
 
+interface IInitialState {
+	userData: TUserDataResponse | null,
+	resetData: TUserResetData | null,
+	resetPassword: TUserResetPassword | null,
+	errorMessage?: string
+}
+
+const initialState:IInitialState = {
+	resetData: null,
+	resetPassword: null,
+	userData: null,
+	errorMessage: ''
+}
+
 export const userSlice = createSlice({
 	name: 'user',
-	initialState: {
-		resetData: null,
-		resetPassword: null,
-		userData: null,
-		errorMessage: ''
-	},
+	initialState: initialState,
 	reducers: {
 
 	},

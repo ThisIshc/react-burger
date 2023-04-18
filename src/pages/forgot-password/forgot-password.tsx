@@ -3,8 +3,7 @@ import style from "./forgot-password.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {ChangeEvent, SyntheticEvent, useEffect, useRef, useState} from "react";
 import {fetchPasswordReset} from "../../services/user-slice";
-import {useSelector} from "react-redux";
-import {useAppDispatch} from "../../services/store";
+import {useAppDispatch, useAppSelector} from "../../services/store";
 
 type TResetData = {
 	readonly success: boolean,
@@ -21,7 +20,7 @@ const ForgotPage = () => {
 	const [state, setState] = useState('')
 	const dispatch = useAppDispatch()
 	const refForm = useRef<HTMLFormElement>(null)
-	const resetData:TResetData = useSelector((data: IResetData) => data.user.resetData)
+	const resetData = useAppSelector((data) => data.user.resetData)
 	const navigate = useNavigate()
 
 	useEffect(() => {

@@ -1,21 +1,20 @@
 import {FunctionComponent, useEffect} from "react";
 import styles from "./feed.module.css"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import FeedCard from "../../components/feed-card/feed-card";
 import {TFeedItem} from "../../types/feed";
 import {TIngredient} from "../../types/ingredient";
-import {TBurgerData} from "../../types/burger";
 import {Link, useLocation} from "react-router-dom";
-import {TSocketData} from "../../types/socket";
 import {getCurrentFeed} from "../../services/feed-slice";
+import {useAppSelector} from "../../services/store";
 
 
 
 const FeedPage:FunctionComponent = () => {
 	const dispatch = useDispatch()
 	const location = useLocation()
-	const socketData = useSelector((state:TSocketData) => state.socket)
-	const ingredients: TIngredient[] | unknown = useSelector<TBurgerData>(state => state.burger.data)
+	const socketData = useAppSelector((state) => state.socket)
+	const ingredients = useAppSelector(state => state.burger.data)
 	const socketMessage = socketData.messages && socketData.messages[socketData.messages.length -1] ? JSON.parse(socketData.messages[socketData.messages.length -1]) : []
 
 	const getFeed = (id: string) => {

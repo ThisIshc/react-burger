@@ -1,20 +1,19 @@
 import style from "../profile/profile.module.css";
 import ProfileMenu from "../../components/profile-menu/profile-menu";
 import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
-import {TSocketData} from "../../types/socket";
 import {TIngredient} from "../../types/ingredient";
-import {TBurgerData} from "../../types/burger";
 import {TFeedItem} from "../../types/feed";
 import FeedCard from "../../components/feed-card/feed-card";
 import {getCurrentFeed} from "../../services/feed-slice";
+import {useAppSelector} from "../../services/store";
 
 const ProfileOrdersPage = () => {
 	const dispatch = useDispatch()
 	const location = useLocation()
-	const socketData = useSelector((state:TSocketData) => state.socket)
-	const ingredients: TIngredient[] | unknown = useSelector<TBurgerData>(state => state.burger.data)
+	const socketData = useAppSelector((state) => state.socket)
+	const ingredients = useAppSelector(state => state.burger.data)
 	const socketMessage = socketData.messages && socketData.messages[socketData.messages.length -1] ? JSON.parse(socketData.messages[socketData.messages.length -1]) : []
 
 	const getOrder = (id: string) => {

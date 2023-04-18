@@ -1,11 +1,8 @@
 import styles from './feed-card.module.css'
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import {TFeedItem} from "../../types/feed";
-import {FunctionComponent, useEffect, useMemo, useState} from "react";
+import {FunctionComponent, useMemo} from "react";
 import {TIngredient} from "../../types/ingredient";
-// import {TIngredient} from "../../types/ingredient";
-// import {useSelector} from "react-redux";
-// import {TBurgerData} from "../../types/burger";
 
 interface IItem {
 	data: TFeedItem,

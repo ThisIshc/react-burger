@@ -2,11 +2,9 @@ import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-deve
 import style from "./register.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {useRef, useState, useEffect, ChangeEvent, SyntheticEvent} from "react";
-import {useSelector} from "react-redux";
 import { fetchUserRegister} from "../../services/user-slice";
 import {getCookie} from "../../utils/cookie";
-import {IUserData} from "../../types/user";
-import {useAppDispatch} from "../../services/store";
+import {useAppDispatch, useAppSelector} from "../../services/store";
 
 function RegisterPage() {
 	const [state, setState] = useState({
@@ -16,7 +14,7 @@ function RegisterPage() {
 	})
 	const dispatch = useAppDispatch()
 	const refForm = useRef<HTMLFormElement>(null)
-	const userData = useSelector((data: IUserData) => data.user)
+	const userData = useAppSelector((data) => data.user)
 	const navigate = useNavigate();
 
 	useEffect(() => {

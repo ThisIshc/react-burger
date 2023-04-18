@@ -2,17 +2,18 @@ import React, {useMemo, useRef, useEffect, FunctionComponent} from "react";
 import Tabs from "../tabs/tabs";
 import style from "./burger-ingredients.module.css"
 import IngredientsGroup from "../ingredients-group/ingredients-group";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {updateTabs} from "../../services/burger-slice";
 import {getCurrentIngredient} from "../../services/ingredient-slice";
 import {TIngredient} from "../../types/ingredient";
-import {TBurgerData, TTab} from "../../types/burger";
+import {TTab} from "../../types/burger";
+import {useAppSelector} from "../../services/store";
 
 
 const BurgerIngredients:FunctionComponent = () => {
 	const dispatch = useDispatch()
-	const ingredients:TIngredient[] | unknown = useSelector<TBurgerData>(state => state.burger.data)
-	const tabs = useSelector<TBurgerData>(state => state.burger.tabs)
+	const ingredients = useAppSelector(state => state.burger.data)
+	const tabs = useAppSelector(state => state.burger.tabs)
 
 	const rootRef = useRef<HTMLDivElement>(null)
 

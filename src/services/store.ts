@@ -7,7 +7,7 @@ import {userSlice} from "./user-slice";
 import {socketMiddleware} from "../middleware/socket-middleware";
 import {socketSlice} from "./socket-slice";
 import {feedSlice} from "./feed-slice";
-import {useDispatch} from "react-redux";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 const wsUrl:string = 'wss://norma.nomoreparties.space/orders'
 
@@ -27,5 +27,6 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export default store;

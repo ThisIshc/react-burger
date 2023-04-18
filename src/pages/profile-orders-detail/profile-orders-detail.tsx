@@ -1,13 +1,13 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import {FunctionComponent, useEffect, useMemo, useState} from "react";
-import {ISocketMessage, TSocketData} from "../../types/socket";
+import {ISocketMessage} from "../../types/socket";
 import {TIngredient} from "../../types/ingredient";
-import {TBurgerData} from "../../types/burger";
 import {TFeedItem} from "../../types/feed";
 import {clearCurrentFeed, getCurrentFeed} from "../../services/feed-slice";
 import styles from "../feed-detail/feed-detail.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useAppSelector} from "../../services/store";
 
 interface IFeedDetailsProps {
 	isModal: boolean
@@ -24,13 +24,12 @@ const ProfileOrdersDetailPage:FunctionComponent<IFeedDetailsProps> = ({isModal})
 	const params = useParams()
 
 	const [state, setState] = useState<IFeedDetailsState>()
-	const socketData = useSelector((state:TSocketData) => state.socket)
-	const ingredients: TIngredient[] | unknown = useSelector<TBurgerData>(state => state.burger.data)
+	const socketData = useAppSelector((state) => state.socket)
+	const ingredients = useAppSelector(state => state.burger.data)
 
 	const socketMessage:ISocketMessage = socketData.messages && socketData.messages[socketData.messages.length -1] ? JSON.parse(socketData.messages[socketData.messages.length -1]) : []
 	const order:TFeedItem | undefined = socketMessage && socketMessage.orders ? socketMessage.orders.find((item:TFeedItem) => item._id === params.id) : undefined
 
-	// let sum = 0
 	const orderIngredients = useMemo(() => {
 		let obj:any = {}
 		let ingredientsArr:TIngredient[] = []
