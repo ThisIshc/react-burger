@@ -1,9 +1,9 @@
-import {useSelector} from "react-redux";
 import React, {FunctionComponent} from "react";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
+import {useAppSelector} from "../../services/store";
 
 type TIngredientData = {
 	readonly __v: number,
@@ -36,7 +36,7 @@ interface IIngredientsState {
 }
 
 const Home:FunctionComponent = () => {
-	const ingredients:IIngredients | unknown = useSelector<IIngredientsState>(state => state.burger)
+	const ingredients = useAppSelector(state => state.burger)
 
 	if (ingredients) {
 		let {isLoading, hasError, data}: { isLoading?: boolean, hasError?: boolean, data?: TIngredientData[]} = ingredients

@@ -12,7 +12,7 @@ const AppHeader:FunctionComponent = () => {
 						<MenuItem link={"/"} text={"Конструктор"}>
 							<BurgerIcon type={"primary"} />
 						</MenuItem>
-						<MenuItem link={"/order"} text={"Лента заказов"}>
+						<MenuItem link={"/feed"} text={"Лента заказов"}>
 							<ListIcon type={"secondary"} />
 						</MenuItem>
 					</nav>

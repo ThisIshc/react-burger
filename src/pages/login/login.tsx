@@ -2,8 +2,8 @@ import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-b
 import style from "./login.module.css"
 import {Link} from "react-router-dom";
 import {ChangeEvent, FunctionComponent, SyntheticEvent, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
 import {fetchUserAuth} from "../../services/user-slice";
+import {useAppDispatch, useAppSelector} from "../../services/store";
 
 type TUserData = {
 	resetData: {
@@ -35,15 +35,15 @@ const LoginPage:FunctionComponent = () => {
 		email: '',
 		password: '',
 	})
-	const dispatch = useDispatch()
-	const userData:TUserData = useSelector((data:IUserData) => data.user)
+	const dispatch = useAppDispatch()
+	const userData = useAppSelector((data) => data.user)
 
 	const onChange = (e:ChangeEvent<HTMLInputElement>) => {
 		setState({...state, [e.target.name]: e.target.value})
 	}
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault()
-		dispatch<any>(fetchUserAuth(state))
+		dispatch(fetchUserAuth(state))
 	}
 
 	return (
@@ -69,7 +69,7 @@ const LoginPage:FunctionComponent = () => {
 								name={'password'}
 							/>
 						</div>
-						{userData as TUserData && userData?.errorMessage &&
+						{userData && userData?.errorMessage &&
 							<div className={'text text_type_main-small mt-3 mb-6'}>{userData.errorMessage}</div>
 						}
 					</div>

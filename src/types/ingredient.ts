@@ -11,7 +11,7 @@ export type TIngredient = {
 	readonly type: string,
 	readonly __v: number,
 	readonly _id: string,
-	readonly count?: number,
+	count?: number,
 	readonly id?: string,
 }
 export interface IIngredient {

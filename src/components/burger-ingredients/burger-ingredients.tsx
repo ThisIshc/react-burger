@@ -2,28 +2,18 @@ import React, {useMemo, useRef, useEffect, FunctionComponent} from "react";
 import Tabs from "../tabs/tabs";
 import style from "./burger-ingredients.module.css"
 import IngredientsGroup from "../ingredients-group/ingredients-group";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {updateTabs} from "../../services/burger-slice";
 import {getCurrentIngredient} from "../../services/ingredient-slice";
 import {TIngredient} from "../../types/ingredient";
+import {TTab} from "../../types/burger";
+import {useAppSelector} from "../../services/store";
 
-type TTab = {
-	value: string,
-	active: boolean,
-	onClick: () => {}
-}
-
-type TBurgerData = {
-	readonly burger: {
-		readonly data: TIngredient[]
-		readonly tabs: TTab[]
-	}
-}
 
 const BurgerIngredients:FunctionComponent = () => {
 	const dispatch = useDispatch()
-	const ingredients:TIngredient[] | unknown = useSelector<TBurgerData>(state => state.burger.data)
-	const tabs = useSelector<TBurgerData>(state => state.burger.tabs)
+	const ingredients = useAppSelector(state => state.burger.data)
+	const tabs = useAppSelector(state => state.burger.tabs)
 
 	const rootRef = useRef<HTMLDivElement>(null)
 
@@ -39,7 +29,7 @@ const BurgerIngredients:FunctionComponent = () => {
 	}, [ingredients])
 	const main = useMemo(() => {
 		if (Array.isArray(ingredients)) {
-			return ingredients.filter((item) => item.type === 'sauce')
+			return ingredients.filter((item) => item.type === 'main')
 		}
 	}, [ingredients])
 

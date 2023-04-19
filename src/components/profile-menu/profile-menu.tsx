@@ -1,16 +1,16 @@
 import style from "./profile-menu.module.css"
 import {NavLink, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
 import {fetchLogout} from "../../services/user-slice";
 import {FunctionComponent, SyntheticEvent} from "react";
+import {useAppDispatch} from "../../services/store";
 
 const ProfileMenu:FunctionComponent = () => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
 	const handleLogout = (e:SyntheticEvent) => {
 		e.preventDefault()
-		dispatch<any>(fetchLogout())
+		dispatch(fetchLogout())
 		navigate('/')
 	}
 
@@ -18,7 +18,7 @@ const ProfileMenu:FunctionComponent = () => {
 		<div className="menu">
 			<div className={style.menu__links + " text text_type_main-medium mb-20"}>
 				<div className={style.menu__link}>
-					<NavLink to={{pathname: '/profile'}} className={({ isActive }) => isActive ? style.active : ''}>Профиль</NavLink>
+					<NavLink to={{pathname: '/profile/'}} className={({ isActive }) => isActive ? style.active : ''}>Профиль</NavLink>
 				</div>
 				<div className={style.menu__link}>
 					<NavLink to={{pathname: '/profile/orders'}} className={({ isActive }) => isActive ? style.active : ''}>История заказов</NavLink>

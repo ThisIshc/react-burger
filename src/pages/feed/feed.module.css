@@ -1,0 +1,45 @@
+.feed__content {
+    font-family: 'Jet Brains Mono';
+    font-weight: 400;
+    display: flex;
+}
+.feed__content_left {
+    width: 51%;
+    padding-right: 30px;
+}
+.feed__content_right {
+    width: 49%;
+    padding-left: 30px;
+    max-height: calc(100vh - 180px);
+    overflow: auto;
+}
+.feed__number {
+    font-family: 'Iceland';
+    font-size: 28px;
+    line-height: 24px;
+}
+.feed__cards {
+    max-height: calc(100vh - 180px);
+    overflow: auto;
+    padding-right: 16px;
+}
+.feed__table {
+    display: flex;
+    column-gap: 36px;
+}
+.feed__table_column {
+    width: 50%;
+}
+.feed__table_complete {
+    color: #00cccc;
+}
+.feed__table_orders {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 190px;
+    overflow: hidden;
+}
+.feed__table_orders div {
+    width: 50%;
+}

@@ -2,14 +2,19 @@ import ProfileMenu from "../../components/profile-menu/profile-menu";
 import style from "./profile.module.css"
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {ChangeEvent, FunctionComponent, SyntheticEvent, useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
 import {fetchUpdateUser} from "../../services/user-slice";
-import {IUserData, TUserDataResponse} from "../../types/user";
+import {useAppDispatch, useAppSelector} from "../../services/store";
+
+type TInputProps = {
+	value: string,
+	disabled: boolean,
+	edit: boolean
+}
 
 type TInputs = {
-	email: object,
-	password: object,
-	name: object,
+	email: TInputProps,
+	password: TInputProps,
+	name: TInputProps,
 };
 
 const ProfilePage:FunctionComponent = () => {
@@ -31,8 +36,8 @@ const ProfilePage:FunctionComponent = () => {
 		},
 		changeData: false
 	})
-	const dispatch = useDispatch()
-	const userData:TUserDataResponse = useSelector((state:IUserData) => state.user.userData)
+	const dispatch = useAppDispatch()
+	const userData = useAppSelector((state) => state.user.userData)
 
 	useEffect(() => {
 		if (userData) {
@@ -40,7 +45,7 @@ const ProfilePage:FunctionComponent = () => {
 				...state,
 				email: {
 					...state.email,
-					value: userData.email
+					value: userData.email ? userData.email : ''
 				},
 				name: {
 					...state.name,
@@ -86,7 +91,7 @@ const ProfilePage:FunctionComponent = () => {
 	}
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault()
-		dispatch<any>(fetchUpdateUser({
+		dispatch(fetchUpdateUser({
 			email: state.email.value,
 			name: state.name.value,
 			password: state.password.value,
@@ -97,22 +102,24 @@ const ProfilePage:FunctionComponent = () => {
 		})
 	}
 	const cancelUpdate = () => {
-		setState({
-			...state,
-			email: {
-				...state.email,
-				value: userData.email
-			},
-			name: {
-				...state.name,
-				value: userData.name
-			},
-			password: {
-				...state.password,
-				value: ''
-			},
-			changeData: false
-		})
+		if (userData) {
+			setState({
+				...state,
+				email: {
+					...state.email,
+					value: userData.email
+				},
+				name: {
+					...state.name,
+					value: userData.name
+				},
+				password: {
+					...state.password,
+					value: ''
+				},
+				changeData: false
+			})
+		}
 	}
 
 	return (

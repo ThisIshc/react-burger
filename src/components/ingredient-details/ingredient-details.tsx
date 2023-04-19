@@ -1,8 +1,9 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
 import style from './ingredient-details.module.css'
 import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {getCurrentIngredient} from "../../services/ingredient-slice";
+import {useAppSelector} from "../../services/store";
 
 type TIngredientData = {
 	readonly __v: number,
@@ -42,7 +43,7 @@ interface IIngredientDetailsState {
 const IngredientDetails:FunctionComponent<IIngredientDetailsProps> = ({isModal}) => {
 	const [state, setState] = useState<IIngredientDetailsState>()
 	const params = useParams()
-	const dataIngredients:TIngredientData[] | unknown = useSelector<TBurgerData>(state => state.burger.data)
+	const dataIngredients = useAppSelector(state => state.burger.data)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
