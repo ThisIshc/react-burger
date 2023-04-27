@@ -59,7 +59,7 @@ const IngredientDetails:FunctionComponent<IIngredientDetailsProps> = ({isModal})
 	return (
 		<div className={!isModal ? style.detailIngredient : ''}>
 			{state &&
-				<div className={style.detailIngredient__content}>
+				<div className={style.detailIngredient__content} id={'modalIngredientContent'}>
 				<div className={style.detailIngredient__img}>
 					<img src={state.image_large} alt={state.name}/>
 				</div>

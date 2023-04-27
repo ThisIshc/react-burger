@@ -10,6 +10,13 @@ import {BrowserRouter as Router} from "react-router-dom";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
+//@ts-ignore
+if (window.Cypress) {
+    //@ts-ignore
+    window.store = store
+}
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

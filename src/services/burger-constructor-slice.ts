@@ -27,7 +27,7 @@ export const fetchCreateOrder = createAsyncThunk(
 	}
 )
 
-const initialState:IBurgerConstructor = {
+export const initialState:IBurgerConstructor = {
 	ingredients: [],
 	buns: [],
 	order: {},
@@ -72,7 +72,9 @@ export const burgerConstructorSlice = createSlice({
 			return {
 				...state,
 				order: {},
-				hasError: false
+				hasError: false,
+				ingredients: [],
+				buns: []
 			}
 		}
 	},

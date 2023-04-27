@@ -1,10 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-// interface IIngredientSlice {
-// 	ingredient: TIngredient | null
-// }
-
-const initialState:any = {
+export const initialState:any = {
 	feed: null
 }
 

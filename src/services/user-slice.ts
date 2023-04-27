@@ -80,7 +80,7 @@ interface IInitialState {
 	errorMessage?: string
 }
 
-const initialState:IInitialState = {
+export const initialState:IInitialState = {
 	resetData: null,
 	resetPassword: null,
 	userData: null,

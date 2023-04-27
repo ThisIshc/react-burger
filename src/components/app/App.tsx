@@ -85,9 +85,13 @@ const App = () => {
 
 					{ background && currentIngredient.ingredient ? (
 						<Route path={"/ingredients/:ingredientId"} element={
-							<Modal title={'Детали ингредиента'} onClose={closeModal} >
-								<IngredientDetails isModal={true} />
-							</Modal>} />
+							<>
+								<Home />
+								<Modal title={'Детали ингредиента'} onClose={closeModal} >
+									<IngredientDetails isModal={true} />
+								</Modal>
+							</>
+							} />
 					) : (
 						<Route path={"/ingredients/:ingredientId"} element={<IngredientDetails isModal={false} />} />
 					)

@@ -66,6 +66,8 @@ const BurgerConstructor:FunctionComponent = () => {
 
 	useEffect(() => {
 		if (products.length || bun) {
+			console.log(products)
+			console.log(bun)
 			dispatch(updateData({products: products, bun: bun}))
 		}
 	}, [products, bun, dispatch])
@@ -80,7 +82,7 @@ const BurgerConstructor:FunctionComponent = () => {
 			isHover: monitor.isOver()
 		}),
 		drop(item) {
-			console.log(item)
+			console.log('test', item)
 			dispatch(addIngredient({...(item as TIngredient), dragId: uuidv4()}))
 		}
 	})
