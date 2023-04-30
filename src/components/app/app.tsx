@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import './App.css';
 import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Home from "../../pages/home/home";
 import LoginPage from "../../pages/login/login";
@@ -65,9 +64,14 @@ const App = () => {
 
 					{ backgroundFeed && currentFeed && currentFeed.feed ? (
 						<Route path={"/feed/:id"} element={
-							<Modal title={'Детали заказа'} onClose={closeModal} >
-								<FeedDetailPage isModal={true} />
-							</Modal>} />
+							<>
+								<FeedPage />
+								<Modal title={'Детали заказа'} onClose={closeModal} >
+									<FeedDetailPage isModal={true} />
+								</Modal>
+							</>}
+						/>
+
 					) : (
 						<Route path={"/feed/:id"} element={<FeedDetailPage isModal={false} /> } />
 					)
@@ -75,9 +79,13 @@ const App = () => {
 
 					{ backgroundOrder && currentFeed.feed ? (
 						<Route path={"/profile/orders/:id"} element={
-							<Modal title={'Детали заказа'} onClose={closeModal} >
-								<ProfileOrdersDetail isModal={true} />
-							</Modal>} />
+							<>
+								<ProfileOrdersPage />
+								<Modal title={'Детали заказа'} onClose={closeModal} >
+									<ProfileOrdersDetail isModal={true} />
+								</Modal>
+							</>
+						} />
 					) : (
 						<Route path={"/profile/orders/:id"} element={<ProfileOrdersDetail isModal={false} /> } />
 					)

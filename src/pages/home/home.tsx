@@ -4,42 +4,14 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import {useAppSelector} from "../../services/store";
-
-type TIngredientData = {
-	readonly __v: number,
-	readonly _id: string,
-	readonly name: string,
-	readonly type: string,
-	readonly proteins: number,
-	readonly fat: number,
-	readonly carbohydrates: number,
-	readonly calories: number,
-	readonly image: string,
-	readonly image_mobile: string,
-	readonly image_large: string,
-	readonly count?: number,
-	readonly price: number,
-}
-
-interface IIngredients {
-	data: TIngredientData[],
-	isLoading: boolean,
-	hasError: boolean,
-}
-
-interface IIngredientsState {
-	burger: {
-		data: TIngredientData[],
-		isLoading: boolean,
-		hasError: boolean,
-	}
-}
+import style from './../../components/app/app.module.css'
+import {TIngredient} from "../../types/ingredient";
 
 const Home:FunctionComponent = () => {
 	const ingredients = useAppSelector(state => state.burger)
 
 	if (ingredients) {
-		let {isLoading, hasError, data}: { isLoading?: boolean, hasError?: boolean, data?: TIngredientData[]} = ingredients
+		let {isLoading, hasError, data}: { isLoading?: boolean, hasError?: boolean, data?: TIngredient[]} = ingredients
 		return (
 			<div className="App">
 				{isLoading && 'Загрузка'}
@@ -49,12 +21,12 @@ const Home:FunctionComponent = () => {
 						<main>
 							<div className="burger__content">
 								<div className="container">
-									<div className="burger__wrapper">
+									<div className={style.burger__wrapper}>
 										<DndProvider backend={HTML5Backend}>
-											<div className="burger__block">
+											<div className={style.burger__block}>
 												<BurgerIngredients/>
 											</div>
-											<div className="burger__block">
+											<div className={style.burger__block}>
 												<BurgerConstructor/>
 											</div>
 										</DndProvider>

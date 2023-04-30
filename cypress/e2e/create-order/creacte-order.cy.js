@@ -1,6 +1,8 @@
+import {TEST_URL} from "../../../src/utils/response";
+
 describe('test ingredient modal', () => {
 	before(function () {
-		cy.visit('http://localhost:3000/')
+		cy.visit(TEST_URL)
 	})
 	it('auth user', () => {
 		cy.get('input[name="email"]').type('andreyy.bayandin@yandex.ru')

@@ -7,7 +7,9 @@ import {TFeedItem} from "../../types/feed";
 import {clearCurrentFeed, getCurrentFeed} from "../../services/feed-slice";
 import styles from "../feed-detail/feed-detail.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useAppSelector} from "../../services/store";
+import {useAppSelector, wsUrl} from "../../services/store";
+import {getCookie} from "../../utils/cookie";
+import {WS_CONNECTION_START} from "../../actions/ws-actions";
 
 interface IFeedDetailsProps {
 	isModal: boolean
@@ -65,7 +67,8 @@ const ProfileOrdersDetailPage:FunctionComponent<IFeedDetailsProps> = ({isModal})
 	}, [orderIngredients])
 
 	useEffect(() => {
-		dispatch({type: 'WS_CONNECTION_START'})
+		const token = getCookie('accessToken').replace('Bearer ', '')
+		dispatch({type: WS_CONNECTION_START, payload: {wsUrl: `${wsUrl}?token=${token}`}})
 		setState({...state, order: order})
 		if (state && state.order) {
 			dispatch(getCurrentFeed(state.order))

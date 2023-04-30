@@ -1,19 +1,10 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import createOrder from "../utils/order-api";
-
-type TIngredient = {
-	readonly dragId: string,
-	readonly id: string,
-	readonly image: string,
-	readonly name: string,
-	readonly type: string,
-	readonly index: number,
-	readonly price: number,
-}
+import {TIngredientShort} from "../types/ingredient";
 
 interface IBurgerConstructor {
-	ingredients: TIngredient[],
-	buns: TIngredient[],
+	ingredients: TIngredientShort[],
+	buns: TIngredientShort[],
 	order: any,
 	modalIsOpen: boolean,
 	hasError: boolean
@@ -39,7 +30,7 @@ export const burgerConstructorSlice = createSlice({
 	name: 'order',
 	initialState,
 	reducers: {
-		addIngredient(state, action: PayloadAction<TIngredient>) {
+		addIngredient(state, action: PayloadAction<TIngredientShort>) {
 			if (action.payload.type === 'bun') {
 				if (state.buns.length) {
 					state.buns = [];

@@ -7,7 +7,8 @@ import {clearCurrentFeed, getCurrentFeed} from "../../services/feed-slice";
 import {TFeedItem} from "../../types/feed";
 import {ISocketMessage} from "../../types/socket";
 import {TIngredient} from "../../types/ingredient";
-import {useAppSelector} from "../../services/store";
+import {useAppSelector, wsUrl} from "../../services/store";
+import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../actions/ws-actions";
 
 interface IFeedDetailsProps {
 	isModal: boolean
@@ -66,13 +67,13 @@ const FeedDetailPage:FunctionComponent<IFeedDetailsProps> = ({isModal}) => {
 	}, [orderIngredients])
 
 	useEffect(() => {
-		dispatch({type: 'WS_CONNECTION_START'})
+		dispatch({type: WS_CONNECTION_START, payload: {wsUrl: `${wsUrl}/all`}})
 		setState({...state, order: order})
 		if (state && state.order) {
 			dispatch(getCurrentFeed(state.order))
 		}
 		return () => {
-			dispatch({type: 'WS_CONNECTION_CLOSE'})
+			dispatch({type: WS_CONNECTION_CLOSE})
 			dispatch(clearCurrentFeed)
 		}
 	}, [])

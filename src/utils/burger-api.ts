@@ -1,6 +1,4 @@
-import {checkResponse} from "./response";
-
-const API_URL = 'https://norma.nomoreparties.space/api'
+import {API_URL, checkResponse} from "./response";
 
 export default function getIngredientsApi() {
 	return fetch(`${API_URL}/ingredients`)

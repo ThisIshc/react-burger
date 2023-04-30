@@ -7,7 +7,9 @@ import {TIngredient} from "../../types/ingredient";
 import {TFeedItem} from "../../types/feed";
 import FeedCard from "../../components/feed-card/feed-card";
 import {getCurrentFeed} from "../../services/feed-slice";
-import {useAppSelector} from "../../services/store";
+import {useAppSelector, wsUrl} from "../../services/store";
+import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../actions/ws-actions";
+import {getCookie} from "../../utils/cookie";
 
 const ProfileOrdersPage = () => {
 	const dispatch = useDispatch()
@@ -24,9 +26,10 @@ const ProfileOrdersPage = () => {
 	}
 
 	useEffect(() => {
-		dispatch({type: 'WS_CONNECTION_START'})
+		const token = getCookie('accessToken').replace('Bearer ', '')
+		dispatch({type: WS_CONNECTION_START, payload: {wsUrl: `${wsUrl}/?token=${token}`}})
 		return () => {
-			dispatch({type: 'WS_CONNECTION_CLOSE'})
+			dispatch({type: WS_CONNECTION_CLOSE})
 		}
 	}, [])
 

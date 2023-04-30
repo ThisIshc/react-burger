@@ -2,20 +2,13 @@ import React, {FunctionComponent} from "react";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styleIngredient from "./ingredient.module.css"
 import {useDrag} from "react-dnd";
+import {TIngredientShort} from "../../types/ingredient";
 
-type TIngredientProps = {
-	readonly id: string,
-	readonly name: string,
-	readonly img: string,
-	readonly type: string,
-	readonly price: number,
-	readonly count?: number,
-	readonly getIngredient: (id:string) => void
-}
-
-const Ingredient:FunctionComponent<TIngredientProps> = (props) => {
+const Ingredient:FunctionComponent<TIngredientShort> = (props) => {
 	const handlerIngredient = () => {
-		props.getIngredient(props.id)
+		if (props.getIngredient) {
+			props.getIngredient(props.id)
+		}
 	}
 
 	const [{opacity}, dragRef] = useDrag({
@@ -25,7 +18,7 @@ const Ingredient:FunctionComponent<TIngredientProps> = (props) => {
 			type: props.type,
 			name: props.name,
 			price: props.price,
-			image: props.img
+			image: props.image
 		},
 		collect: monitor => ({
 			opacity: monitor.isDragging() ? 0.5 : 1
@@ -41,7 +34,7 @@ const Ingredient:FunctionComponent<TIngredientProps> = (props) => {
 				}
 			</div>
 			<div className={styleIngredient.ingredient__img + " pl-4 pr-4 mb-1"}>
-				<img src={props.img} alt={props.name}/>
+				<img src={props.image} alt={props.name}/>
 			</div>
 			<div className={styleIngredient.ingredient__price + " text text_type_main-medium mb-1"}>
 				<span className={"mr-2"}>

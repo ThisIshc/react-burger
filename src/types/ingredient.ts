@@ -14,6 +14,24 @@ export type TIngredient = {
 	count?: number,
 	readonly id?: string,
 }
+
+export type TIngredientShort = {
+	readonly id: string,
+	readonly name: string,
+	readonly image: string,
+	readonly type: string,
+	readonly price: number,
+	dragId?: string,
+	index?: number,
+	count?: number,
+	readonly getIngredient?: (id:string) => void
+}
+type TIngredientProps = {
+	readonly img: string,
+
+	readonly getIngredient: (id:string) => void
+}
+
 export interface IIngredient {
 	ingredient: {
 		ingredient: TIngredient
