@@ -10,9 +10,10 @@ export const ProtectedRouteElement = ({element}: ProtectedRouteProps) => {
 	const userData = useAppSelector((data) => data.user.userData)
 	const resetData = useAppSelector((data) => data.user.resetData)
 	const locationPathname = ['/login', '/register', '/reset-password', '/forgot-password'].indexOf(document.location.pathname)
-	const authPathname = ['/profile'].indexOf(document.location.pathname)
+	const authPathname = ['/profile', '/profile/orders'].indexOf(document.location.pathname)
 	const location = useLocation()
 
+	console.log(getCookie('accessToken'))
 	if (userData === null && !getCookie('accessToken')) {
 		if (document.location.pathname === '/reset-password' && resetData !== null) {
 			return element

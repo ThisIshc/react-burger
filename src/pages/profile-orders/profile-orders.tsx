@@ -27,7 +27,7 @@ const ProfileOrdersPage = () => {
 
 	useEffect(() => {
 		const token = getCookie('accessToken').replace('Bearer ', '')
-		dispatch({type: WS_CONNECTION_START, payload: {wsUrl: `${wsUrl}/?token=${token}`}})
+		dispatch({type: WS_CONNECTION_START, payload: {wsUrl: `${wsUrl}?token=${token}`}})
 		return () => {
 			dispatch({type: WS_CONNECTION_CLOSE})
 		}

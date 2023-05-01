@@ -2,7 +2,7 @@ import {TEST_URL} from "../../../src/utils/response";
 
 describe('test ingredient modal', () => {
 	before(function () {
-		cy.visit(TEST_URL)
+		cy.visit(`${TEST_URL}login`)
 	})
 	it('auth user', () => {
 		cy.get('input[name="email"]').type('andreyy.bayandin@yandex.ru')
