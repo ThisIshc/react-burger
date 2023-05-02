@@ -37,7 +37,7 @@ const FeedCard:FunctionComponent<IItem> = (props) => {
 							props.ingredients.map((ingredient, index) => {
 								if (props.ingredients.length >= 6 && index === 0) {
 									return (
-										<div className={`${styles.card__item} ${styles.card__item_last}`}>
+										<div className={`${styles.card__item} ${styles.card__item_last}`} key={index}>
 											<img src={ingredient.image} alt={ingredient.name} />
 											<span className={'text text_type_main-default'}>+{props.ingredients.length - (index + 1)}</span>
 										</div>

@@ -4,26 +4,11 @@ import {useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {getCurrentIngredient} from "../../services/ingredient-slice";
 import {useAppSelector} from "../../services/store";
-
-type TIngredientData = {
-	readonly __v: number,
-	readonly _id: string,
-	readonly name: string,
-	readonly type: string,
-	readonly proteins: number,
-	readonly fat: number,
-	readonly carbohydrates: number,
-	readonly calories: number,
-	readonly image: string,
-	readonly image_mobile: string,
-	readonly image_large: string,
-	readonly count?: number,
-	readonly price: number,
-}
+import {TIngredient} from "../../types/ingredient";
 
 type TBurgerData = {
 	readonly burger: {
-		readonly data: TIngredientData[]
+		readonly data: TIngredient[]
 	}
 }
 
@@ -48,7 +33,7 @@ const IngredientDetails:FunctionComponent<IIngredientDetailsProps> = ({isModal})
 
 	useEffect(() => {
 		if (dataIngredients && Array.isArray(dataIngredients)) {
-			const dataIngredient = dataIngredients.find( (item:TIngredientData) => item._id === params.ingredientId)
+			const dataIngredient = dataIngredients.find( (item:TIngredient) => item._id === params.ingredientId)
 			setState(dataIngredient)
 			if (state) {
 				dispatch(getCurrentIngredient(state))
@@ -59,7 +44,7 @@ const IngredientDetails:FunctionComponent<IIngredientDetailsProps> = ({isModal})
 	return (
 		<div className={!isModal ? style.detailIngredient : ''}>
 			{state &&
-				<div className={style.detailIngredient__content}>
+				<div className={style.detailIngredient__content} id={'modalIngredientContent'}>
 				<div className={style.detailIngredient__img}>
 					<img src={state.image_large} alt={state.name}/>
 				</div>

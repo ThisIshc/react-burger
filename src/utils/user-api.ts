@@ -1,7 +1,5 @@
 import {getCookie} from "./cookie";
-import {checkResponse} from "./response";
-
-const API_URL = 'https://norma.nomoreparties.space/api/'
+import {API_URL, checkResponse} from "./response";
 
 export function passwordReset(email: string) {
 	return fetch(`${API_URL}password-reset`, {
@@ -26,7 +24,7 @@ export function resetPassword(data: {password:string, token:string}) {
 }
 
 export function userRegistration(userData: {email: string, password: string, name: string}) {
-	return fetch(`${API_URL}auth/register`, {
+	return fetch(`${API_URL}/auth/register`, {
 		method: 'post',
 		body: JSON.stringify(userData),
 		headers: {
@@ -36,7 +34,7 @@ export function userRegistration(userData: {email: string, password: string, nam
 }
 
 export function userAuth(userData: {email: string, password: string}) {
-	return fetch(`${API_URL}auth/login`, {
+	return fetch(`${API_URL}/auth/login`, {
 		method: 'post',
 		body: JSON.stringify(userData),
 		headers: {
@@ -46,7 +44,7 @@ export function userAuth(userData: {email: string, password: string}) {
 }
 
 export function getUser() {
-	return fetch(`${API_URL}auth/user`, {
+	return fetch(`${API_URL}/auth/user`, {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
@@ -56,7 +54,7 @@ export function getUser() {
 }
 
 export function updateUser(userData: {email: string, name: string, password: string}) {
-	return fetch(`${API_URL}auth/user`, {
+	return fetch(`${API_URL}/auth/user`, {
 		method: 'PATCH',
 		body: JSON.stringify(userData),
 		headers: {
@@ -67,7 +65,7 @@ export function updateUser(userData: {email: string, name: string, password: str
 }
 
 export function updateToken() {
-	return fetch(`${API_URL}auth/token`, {
+	return fetch(`${API_URL}/auth/token`, {
 		method: 'POST',
 		body: JSON.stringify({token: localStorage.getItem("refreshToken")}),
 		headers: {
@@ -77,7 +75,7 @@ export function updateToken() {
 }
 
 export function userLogout():Promise<any> {
-	return fetch(`${API_URL}auth/logout`, {
+	return fetch(`${API_URL}/auth/logout`, {
 		method: 'POST',
 		body: JSON.stringify({token: localStorage.getItem("refreshToken")}),
 		headers: {

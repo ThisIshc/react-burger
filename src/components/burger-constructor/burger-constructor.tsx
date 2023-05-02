@@ -10,7 +10,8 @@ import {updateData} from "../../services/burger-slice";
 import { v4 as uuidv4 } from 'uuid';
 import IngredientConstructor from "../ingredient-constructor/ingredient-constructor";
 import {getCookie} from "../../utils/cookie";
-import {useAppDispatch} from "../../services/store";
+import {useAppDispatch, useAppSelector} from "../../services/store";
+import {Link} from "react-router-dom";
 
 type TIngredient = {
 	readonly dragId: string,
@@ -30,11 +31,9 @@ interface IDataConstructor {
 	hasError: boolean
 }
 
-const getDataConstructor = (state:IDataConstructor) => state.order
-
 const BurgerConstructor:FunctionComponent = () => {
 	const dispatch = useAppDispatch()
-	const dataConstructor:IDataConstructor | any = useSelector(getDataConstructor)
+	const dataConstructor:IDataConstructor | any = useAppSelector((state) => state.order)
 
 	const bun = useMemo(() => {
 		if (dataConstructor && dataConstructor.buns && Array.isArray(dataConstructor.buns)) {
@@ -80,7 +79,6 @@ const BurgerConstructor:FunctionComponent = () => {
 			isHover: monitor.isOver()
 		}),
 		drop(item) {
-			console.log(item)
 			dispatch(addIngredient({...(item as TIngredient), dragId: uuidv4()}))
 		}
 	})
@@ -135,14 +133,21 @@ const BurgerConstructor:FunctionComponent = () => {
 					<span className={"mr-2"}>{sum}</span>
 					<CurrencyIcon type="primary" />
 				</div>
-				{getCookie('accessToken') &&
+				{ (bun && products) &&
 					<div className="burgerConstructor__button ml-10">
-						<Button htmlType="button" type="primary" size="large" onClick={handleClickOrder}>
-							Оформить заказ
-						</Button>
+						{ getCookie('accessToken') ?
+							<Button htmlType="button" type="primary" size="large" onClick={handleClickOrder}>
+								Оформить заказ
+							</Button>
+							:
+							<Link to={'/login'}>
+								<Button htmlType="button" type="primary" size="large">
+									Оформить заказ
+								</Button>
+							</Link>
+						}
 					</div>
 				}
-
 			</div>
 			{dataConstructor.order.number !== undefined &&
 				<Modal onClose={closeModal} >

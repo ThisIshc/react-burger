@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/app/App';
+import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import store from "./services/store";
@@ -10,6 +10,13 @@ import {BrowserRouter as Router} from "react-router-dom";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
+//@ts-ignore
+if (window.Cypress) {
+    //@ts-ignore
+    window.store = store
+}
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

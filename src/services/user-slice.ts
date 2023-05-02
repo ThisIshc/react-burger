@@ -8,7 +8,7 @@ import {
 	userRegistration
 } from "../utils/user-api";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getCookie, setCookie} from "../utils/cookie";
+import {setCookie} from "../utils/cookie";
 import {TUserDataResponse, TUserResetData, TUserResetPassword} from "../types/user";
 
 export const fetchPasswordReset = createAsyncThunk(
@@ -80,7 +80,7 @@ interface IInitialState {
 	errorMessage?: string
 }
 
-const initialState:IInitialState = {
+export const initialState:IInitialState = {
 	resetData: null,
 	resetPassword: null,
 	userData: null,

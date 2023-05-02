@@ -1,53 +1,42 @@
-import type { Middleware, MiddlewareAPI } from 'redux';
-import {wsConnectionClose, wsConnectionError, wsConnectionSuccess, wsGetMessage} from "../services/socket-slice";
-import {getCookie} from "../utils/cookie";
+import type {Middleware, MiddlewareAPI} from 'redux';
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
-	return ((store: MiddlewareAPI) => {
+export const socketMiddleware = (wsActions:any) => {
+	return((store: MiddlewareAPI) => {
 		let socket: WebSocket | null = null;
-		return next => (action: any) => {
-			const { dispatch } = store;
-			const { type, payload } = action;
-			if (type === 'WS_CONNECTION_START') {
-				if (document.location.href.indexOf('feed') !== -1) {
-					socket = new WebSocket(`${wsUrl}/all`);
-				} else if (document.location.href.indexOf('orders') !== -1) {
-					const token = getCookie('accessToken').replace('Bearer ', '')
-					socket = new WebSocket(`${wsUrl}?token=${token}`);
+		return (next) => (action: any) => {
+			const { dispatch } = store
+			const {type, payload} = action
+			const {wsInit, wsClose, wsSendMessage, onOpen, onClose, onError, onMessage} = wsActions
+
+			if (type === wsInit) {
+				socket = new WebSocket(payload.wsUrl)
+				socket.onopen = (event) => {
+					dispatch({type: onOpen, payload: event})
 				}
-			}
-			if (type === 'WS_CONNECTION_CLOSE') {
-				if (socket) {
+
+				socket.onerror = (event) => {
+					dispatch({type: onError, payload: event})
+				}
+
+				socket.onmessage = (event) => {
+					const { data } = event
+					dispatch({type: onMessage, payload: data})
+				}
+
+				socket.onclose = event => {
+					dispatch({type: onClose, payload: event})
+				};
+
+				if (type === onMessage) {
+					socket.send(JSON.stringify(payload));
+				}
+
+				if (type === wsClose) {
 					socket.close()
 				}
 			}
-			if (socket) {
-				socket.onopen = event => {
-					dispatch(wsConnectionSuccess(event))
-				};
-
-				socket.onerror = event => {
-					dispatch(wsConnectionError(event))
-				};
-
-				// функция, которая вызывается при получения события от сервера
-				socket.onmessage = event => {
-					const { data } = event;
-					dispatch(wsGetMessage(data))
-				};
-
-				socket.onclose = event => {
-					dispatch(wsConnectionClose(event))
-				};
-
-				if (type === 'WS_SEND_MESSAGE') {
-					const message = payload;
-					// функция для отправки сообщения на сервер
-					socket.send(JSON.stringify(message));
-				}
-			}
-
 			next(action);
-		};
-	}) as Middleware;
-};
+		}
+
+	}) as Middleware
+}

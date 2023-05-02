@@ -6,7 +6,8 @@ import {TFeedItem} from "../../types/feed";
 import {TIngredient} from "../../types/ingredient";
 import {Link, useLocation} from "react-router-dom";
 import {getCurrentFeed} from "../../services/feed-slice";
-import {useAppSelector} from "../../services/store";
+import {useAppSelector, wsUrl} from "../../services/store";
+import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../actions/ws-actions";
 
 
 
@@ -16,7 +17,6 @@ const FeedPage:FunctionComponent = () => {
 	const socketData = useAppSelector((state) => state.socket)
 	const ingredients = useAppSelector(state => state.burger.data)
 	const socketMessage = socketData.messages && socketData.messages[socketData.messages.length -1] ? JSON.parse(socketData.messages[socketData.messages.length -1]) : []
-
 	const getFeed = (id: string) => {
 		if (socketMessage && socketMessage.orders) {
 			const order = socketMessage.orders.find((item:TFeedItem) => id === item._id)
@@ -25,9 +25,9 @@ const FeedPage:FunctionComponent = () => {
 	}
 
 	useEffect(() => {
-		dispatch({type: 'WS_CONNECTION_START'})
+		dispatch({type: WS_CONNECTION_START, payload: {wsUrl: `${wsUrl}/all`}})
 		return () => {
-			dispatch({type: 'WS_CONNECTION_CLOSE'})
+			dispatch({type: WS_CONNECTION_CLOSE})
 		}
 	}, [])
 

@@ -1,0 +1,7 @@
+export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START'
+export const WS_CONNECTION_CLOSE: 'WS_CONNECTION_CLOSE' = 'WS_CONNECTION_CLOSE'
+export const WS_SEND_MESSAGE: 'socket/wsSendMessage' = 'socket/wsSendMessage'
+export const WS_CONNECTION_SUCCESS: 'socket/wsConnectionSuccess' = 'socket/wsConnectionSuccess'
+export const WS_CONNECTION_CLOSED: 'socket/wsConnectionClose' = 'socket/wsConnectionClose'
+export const WS_CONNECTION_ERROR: 'socket/wsConnectionError' = 'socket/wsConnectionError'
+export const WS_GET_MESSAGE: 'socket/wsGetMessage' = 'socket/wsGetMessage'

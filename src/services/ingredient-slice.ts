@@ -5,7 +5,7 @@ interface IIngredientSlice {
 	ingredient: TIngredient | null
 }
 
-const initialState:IIngredientSlice = {
+export const initialState:IIngredientSlice = {
 	ingredient: null
 }
 

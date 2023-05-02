@@ -45,8 +45,9 @@ const IngredientsGroup:FunctionComponent<TIngredientsGroupProps> = (props) => {
 					}}
 						 state={{background: location}}
 						  className={styleIngredients.ingredientsGroup__item +" pr-3"}
-						  key={index}>
-						<Ingredient id={item._id} img={item.image} count={item.count} price={item.price} name={item.name} type={item.type} getIngredient={getIngredient} />
+						  key={index}
+					id={'ingredient_'+index}>
+						<Ingredient id={item._id} image={item.image} count={item.count} price={item.price} name={item.name} type={item.type} getIngredient={getIngredient} />
 					</Link>
 					)
 				)}

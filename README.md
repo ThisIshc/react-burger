@@ -1,3 +1,5 @@
+# Ссылка на деплой [Ссылка на gh](https://thisishc.github.io/react-burger/build/index.html) -> после перейти на главную страницу
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

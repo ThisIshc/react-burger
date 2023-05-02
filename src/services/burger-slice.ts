@@ -18,7 +18,7 @@ export const fetchIngredients = createAsyncThunk(
 	}
 )
 
-const initialState:IBurger = {
+export const initialState:IBurger = {
 	data: [],
 	isLoading: false,
 	hasError: false,

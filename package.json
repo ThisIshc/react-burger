@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://thisishc.github.io/react-burger/i",
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.16.5",
@@ -31,7 +31,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress": "cypress open cache clear"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +54,10 @@
   },
   "devDependencies": {
     "@types/redux-logger": "^3.0.9",
-    "@types/uuid": "^9.0.1"
+    "@types/uuid": "^9.0.1",
+    "cypress": "^12.10.0",
+    "eslint-plugin-cypress": "^2.13.2",
+    "fetch-mock": "^9.11.0",
+    "redux-mock-store": "^1.5.4"
   }
 }
